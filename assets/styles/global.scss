@@ -64,11 +64,12 @@ body {
   margin: 0;
   font-family: var(--font-family-secondary);
   color: var(--color-neutral-0);
-  background-color: red
 }
 
 h1, h2, h3, h4, h5, h6, p, a, span {
   margin: 0;
+  width: fit-content;
+  height: fit-content;
 }
 
 
