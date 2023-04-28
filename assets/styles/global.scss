@@ -64,9 +64,53 @@ body {
   margin: 0;
   font-family: var(--font-family-secondary);
   color: var(--color-neutral-0);
+  background-color: red
 }
 
 h1, h2, h3, h4, h5, h6, p, a, span {
   margin: 0;
+}
+
+
+h1 {
+  //font-family: var(--font-family-primary);
+  //font-size: var(--font-size-huge);
+  //font-weight: var(--font-weight-regular);
+  //color: var(--color-neutral-100);
+}
+
+h3 {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-medium);
+  text-transform: uppercase;
+  color: var(--color-neutral-0);
+}
+
+h4 {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-tiny);
+  text-transform: uppercase;
+  color: var(--color-neutral-20);
+}
+
+p {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+}
+
+a {
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-neutral-0);
+}
+
+.grid {
+  width: 100%;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 24px;
 }
 
