@@ -30,7 +30,7 @@ export default {
   }
 
   &__label {
-    grid-column: 12/13;
+    grid-column-start: none;
     justify-self: end;
   }
 }
