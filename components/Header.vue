@@ -6,7 +6,7 @@
                       fill="#040810"/>
             </svg>
         </a>
-        <p class="header__label">©2023</p>
+        <h4 class="header__label">©2023</h4>
     </header>
 </template>
 
@@ -16,19 +16,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 .header {
+  z-index: 4;
   position: absolute;
   top: 0;
+  pointer-events: none;
 
   &__logo {
     width: fit-content;
+    height: fit-content;
   }
 
   &__label {
-    font-style: italic;
-    grid-column: 12;
+    grid-column: 12/13;
     justify-self: end;
   }
 }
