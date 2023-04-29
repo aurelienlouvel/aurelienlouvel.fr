@@ -29,31 +29,28 @@ export default {
   position: absolute;
   bottom: 0;
   align-items: end;
-  pointer-events: none;
 
-  & > * {
-    pointer-events: all;
-  }
+  pointer-events: none;
 
   &__title {
     justify-self: end;
 
     &#{$self}--contact {
-      grid-column: 7/8;
+      grid-column: 8/9;
     }
 
     &#{$self}--socials {
-      grid-column: 10/11;
+      grid-column: 11/12;
     }
   }
 
   &__links {
     &#{$self}--contact {
-      grid-column: 8/10;
+      grid-column: 9/11;
     }
 
     &#{$self}--socials {
-      grid-column: 11/13;
+      grid-column: 12/13;
     }
   }
 }
