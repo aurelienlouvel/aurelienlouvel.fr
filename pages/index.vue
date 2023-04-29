@@ -26,14 +26,14 @@
             </div>
 
             <div class="home__title">
-                <div class="title__row">
+                <div class="title--interactive row">
                     <h1 class="title__text">Interactive</h1>
                     <div class="title__symbol">
-                        <h2>✧</h2>
-                        <h2>✦</h2>
+                        <span>✧</span>
+                        <span>✦</span>
                     </div>
                 </div>
-                <div class="title__row">
+                <div class="title--developer row">
                     <div class="title__pill">
                     </div>
                     <h1 class="title__text">Developer</h1>
@@ -102,8 +102,45 @@ import Background from "~/components/Background.vue"
   &__title {
     grid-area: 3/1/4/8;
     align-self: end;
-  }
+    width: fit-content;
 
+    .title {
+
+      &--interactive {
+        color: var(--color-neutral-20);
+      }
+
+      &--developer {
+        gap: 14px;
+      }
+
+      &__symbol {
+        position: relative;
+        height: fit-content;
+
+        span {
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: 1.5rem;
+          font-weight: 700;
+          line-height: 1;
+
+          &:nth-child(2) {
+            opacity: 0
+          }
+        }
+      }
+
+      &__pill {
+        border: 4px solid var(--color-neutral-0);
+        border-radius: max(5vw, 5vh);
+        width: 24vw;
+        max-width: 164px;
+        margin: 4px 0 12px;
+      }
+    }
+  }
 }
 
 </style>
