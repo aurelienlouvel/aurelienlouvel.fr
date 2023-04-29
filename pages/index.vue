@@ -1,20 +1,21 @@
 <template>
     <div>
         <Header/>
-        <main class="home grid">
-            <h2 class="home__alias">(oré)</h2>
+        <main class="main grid">
+            <h2 class="main__alias">(oré)</h2>
 
-            <h5 class="home__number home--about">01</h5>
-            <h3 class="home__content home--about">I’m a front-end web developer <i>& designer,</i><br>studying at
+            <h5 class="main__number main--about">01</h5>
+            <h3 class="main__content main--about">I’m a front-end web developer <i>& designer,</i> studying at
                 Gobelins Paris, France.
             </h3>
 
-            <h5 class="home__number home--apprenticeship">02</h5>
-            <h3 class="home__content home--apprenticeship">Currently looking for a new<br>apprenticeship starting in<br>September
+            <h5 class="main__number main--apprenticeship">02</h5>
+            <h3 class="main__content main--apprenticeship">Currently looking for a new apprenticeship starting in
+                September
                 2023.</h3>
 
-            <h5 class="home__number home--document">03</h5>
-            <div class="home__content home--document col">
+            <h5 class="main__number main--document">03</h5>
+            <div class="main__content main--document col">
                 <a class="link document--resume" href="#">
                     <h3 class="link__name">Resume</h3>
                     <span class="link__arrow">↗</span>
@@ -25,7 +26,7 @@
                 </a>
             </div>
 
-            <div class="home__title">
+            <div class="main__title col">
                 <div class="title--interactive row">
                     <h1 class="title__text">Interactive</h1>
                     <div class="title__symbol">
@@ -52,7 +53,7 @@ import Background from "~/components/Background.vue"
 </script>
 
 <style lang="scss">
-.home {
+.main {
   $self: &;
   position: absolute;
   top: 0;
@@ -61,41 +62,80 @@ import Background from "~/components/Background.vue"
   width: 100%;
   grid-template-rows: 0.175fr 0.225fr auto;
 
+  @media screen and (max-width: 900px) {
+    grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
+  }
+
   pointer-events: none;
 
   &__alias {
     grid-area: 2/1/3/3;
+
+    @media screen and (max-width: 900px) {
+      grid-area: 1/1/2/7;
+      align-self: end;
+      justify-self: end;
+    }
   }
 
   &__number {
     padding: 1px 0;
     justify-self: end;
 
+    @media screen and (max-width: 900px) {
+      justify-self: start;
+    }
+
     &#{$self}--about {
       grid-area: 2/2/3/3;
+
+      @media screen and (max-width: 900px) {
+        grid-area: 2/1/3/2;
+      }
     }
 
     &#{$self}--apprenticeship {
       grid-area: 2/6/3/7;
+
+      @media screen and (max-width: 900px) {
+        grid-area: 3/1/4/2;
+      }
     }
 
     &#{$self}--document {
       grid-area: 3/6/4/7;
+
+      @media screen and (max-width: 900px) {
+        grid-area: 4/1/5/2;
+      }
     }
   }
 
   &__content {
 
     &#{$self}--about {
-      grid-area: 2/3/3/6;
+      max-width: 36ch;
+      grid-area: 2/3/3/7;
+
+      @media screen and (max-width: 900px) {
+        grid-area: 2/2/3/7;
+      }
     }
 
     &#{$self}--apprenticeship {
+      max-width: 26ch;
       grid-area: 2/7/3/10;
+      @media screen and (max-width: 900px) {
+        grid-area: 3/2/4/7;
+      }
     }
 
     &#{$self}--document {
       grid-area: 3/7/4/10;
+
+      @media screen and (max-width: 900px) {
+        grid-area: 4/5/5/7;
+      }
     }
   }
 
@@ -103,6 +143,12 @@ import Background from "~/components/Background.vue"
     grid-area: 3/1/4/8;
     align-self: end;
     width: fit-content;
+    gap: 8px;
+
+    @media screen and (max-width: 900px) {
+      grid-area: 6/1/7/7;
+      gap: 6px;
+    }
 
     .title {
 
@@ -111,7 +157,11 @@ import Background from "~/components/Background.vue"
       }
 
       &--developer {
-        gap: 14px;
+        gap: 8px;
+
+        @media screen and (max-width: 400px) {
+          gap: 6px;
+        }
       }
 
       &__symbol {
@@ -133,11 +183,32 @@ import Background from "~/components/Background.vue"
       }
 
       &__pill {
+        width: 10vw;
+        max-width: 164px;
+        margin-top: 4px;
         border: 4px solid var(--color-neutral-0);
         border-radius: max(5vw, 5vh);
-        width: 24vw;
-        max-width: 164px;
-        margin: 4px 0 12px;
+
+        @media screen and (min-width: 1600px) {
+          border-width: 5px;
+        }
+
+        @media screen and (max-width: 900px) {
+          width: 24vw;
+          max-width: 360px;
+
+          border-width: 5px;
+        }
+
+        @media screen and (max-width: 600px) {
+          border-width: 4px;
+        }
+
+        @media screen and (max-width: 420px) {
+          margin-top: 2px;
+
+          border-width: 3px;
+        }
       }
     }
   }
