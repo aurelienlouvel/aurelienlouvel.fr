@@ -32,8 +32,21 @@ export default {
 
   pointer-events: none;
 
+  @media screen and (max-width: 1200px) {
+    grid-template-rows: repeat(2, auto);
+  }
+
+  @media screen and (max-width: 900px) {
+    height: 100dvh;
+    grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
+  }
+
   &__title {
     justify-self: end;
+
+    @media screen and (max-width: 1200px) {
+      display: none;
+    }
 
     &#{$self}--contact {
       grid-column: 8/9;
@@ -47,10 +60,25 @@ export default {
   &__links {
     &#{$self}--contact {
       grid-column: 9/11;
+      @media screen and (max-width: 1200px) {
+        grid-area: 2/7/3/10;
+      }
+
+      @media screen and (max-width: 900px) {
+        grid-area: 5/1/6/3;
+      }
     }
 
     &#{$self}--socials {
       grid-column: 12/13;
+
+      @media screen and (max-width: 1200px) {
+        grid-area: 1/7/2/10;
+      }
+
+      @media screen and (max-width: 900px) {
+        grid-area: 5/5/6/7;
+      }
     }
   }
 }
