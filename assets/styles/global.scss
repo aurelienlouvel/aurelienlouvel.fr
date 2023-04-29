@@ -1,39 +1,44 @@
 @font-face {
   font-family: 'Manrope';
-  src: url("~assets/fonts/manrope-regular.woff2") format("woff2"),
-  url("~assets/fonts/manrope-regular.woff") format("woff");
+  src: url("../fonts/manrope-regular.woff2") format("woff2"),
+  url("../fonts/manrope-regular.woff") format("woff");
   font-weight: 400;
+  font-display: block;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Manrope';
-  src: url("~assets/fonts/manrope-regular-italic.woff2") format("woff2"),
-  url("~assets/fonts/manrope-regular-italic.woff") format("woff");
+  src: url("../fonts/manrope-regular-italic.woff2") format("woff2"),
+  url("../fonts/manrope-regular-italic.woff") format("woff");
   font-weight: 400;
+  font-display: block;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Manrope';
-  src: url("~assets/fonts/manrope-medium.woff2") format("woff2"),
-  url("~assets/fonts/manrope-medium.woff") format("woff");
+  src: url("../fonts/manrope-medium.woff2") format("woff2"),
+  url("../fonts/manrope-medium.woff") format("woff");
   font-weight: 500;
+  font-display: block;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Manrope';
-  src: url("~assets/fonts/manrope-semibold.woff2") format("woff2"),
-  url("~assets/fonts/manrope-semibold.woff") format("woff");
+  src: url("../fonts/manrope-semibold.woff2") format("woff2"),
+  url("../fonts/manrope-semibold.woff") format("woff");
   font-weight: 600;
+  font-display: block;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Yapari';
-  src: url("~assets/fonts/yapari-variable.woff2") format("woff2"),
-  url("~assets/fonts/yapari-variable.woff") format("woff");
+  src: url("../fonts/yapari-expanded.woff2") format("woff2"),
+  url("../fonts/yapari-expanded.woff") format("woff");
+  font-display: block;
   font-style: normal;
 }
 
@@ -73,6 +78,7 @@ h1, h2, h3, h4, h5, h6, p, a, span {
   margin: 0;
   width: fit-content;
   height: fit-content;
+  pointer-events: auto;
 
   //leading-trim: both;
   //text-edge: cap;
@@ -80,21 +86,25 @@ h1, h2, h3, h4, h5, h6, p, a, span {
 
 
 h1 {
-  //font-family: var(--font-family-primary);
-  //font-size: var(--font-size-huge);
-  //font-weight: var(--font-weight-regular);
-  //color: var(--color-neutral-100);
+  font-size: min(8vw, 8vh);
+  font-weight: var(--font-weight-regular);
+}
+
+h2 {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-small);
+  letter-spacing: 0.06em;
 }
 
 h3 {
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-medium);
   text-transform: uppercase;
   color: var(--color-neutral-0);
 }
 
 h4 {
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-small);
   font-style: italic;
   text-transform: uppercase;
@@ -114,6 +124,7 @@ p {
 }
 
 a {
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-small);
   text-transform: uppercase;
   text-decoration: none;
@@ -131,6 +142,14 @@ a {
 .col {
   display: flex;
   flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+  gap: 4px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
   width: fit-content;
   height: fit-content;
   gap: 4px;
