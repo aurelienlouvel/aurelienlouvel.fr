@@ -76,16 +76,32 @@ const titleDeveloper = ref<HTMLElement | null>(null)
 let revealTimeline: gsap.core.Timeline
 let context
 
-function splitAlias(alias: HTMLElement | null): void {
-    if (!alias) return
-
+function splitAlias(alias: HTMLElement): HTMLElement[] {
     const aliasText = alias.innerText
     const aliasTextArray = aliasText.split("")
     if (aliasTextArray) {
         let aliasLeft = aliasTextArray[0]
-        let aliasRight = aliasTextArray.slice(1).join("")
+        let aliasContent = aliasTextArray.slice(1, aliasTextArray.length-1).join("")
+        let aliasRight = aliasTextArray[aliasTextArray.length - 1]
 
-        alias.innerHTML = `<span class="alias__left">${aliasLeft}</span><span class="alias__right">${aliasRight}</span>`
+        const aliasLeftSpan = document.createElement("span")
+        aliasLeftSpan.classList.add("alias__left")
+        aliasLeftSpan.innerText = aliasLeft
+
+        const aliasContentSpan = document.createElement("span")
+        aliasContentSpan.classList.add("alias__content")
+        aliasContentSpan.innerText = aliasContent
+
+        const aliasRightSpan = document.createElement("span")
+        aliasRightSpan.classList.add("alias__right")
+        aliasRightSpan.innerText = aliasRight
+
+        alias.innerHTML = ""
+        alias.appendChild(aliasLeftSpan)
+        alias.appendChild(aliasContentSpan)
+        alias.appendChild(aliasRightSpan)
+
+        return [aliasLeftSpan, aliasContentSpan, aliasRightSpan]
     }
 }
 
@@ -116,10 +132,13 @@ function splitIntoLines(element: HTMLElement): void {
 onMounted(() => {
 
     if (main.value) {
-        
-        splitAlias(alias.value)
 
-        const revealElements = [aboutNumber.value, apprenticeshipNumber.value, mediaNumber.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText, titleInteractiveSymbol, titleDeveloper.value]
+
+        //SPLIT ELEMENTS
+
+        const aliasElements = splitAlias(alias.value)
+
+        const revealElements = [alias.value, aboutNumber.value, apprenticeshipNumber.value, mediaNumber.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText, titleInteractiveSymbol, titleDeveloper.value]
 
         revealElements.forEach((element) => {
             if (element) {
@@ -135,29 +154,63 @@ onMounted(() => {
             }
         })
 
+
         let splitElements = {
+            alias: {
+                left: alias.value?.querySelector(".alias__left"),
+                content: alias.value?.querySelector(".alias__content"),
+                right: alias.value?.querySelector(".alias__right")
+            },
             about: {
-                number: aboutNumber.value.querySelector(".line__inner"),
-                content: aboutContent.value.querySelectorAll(".line__inner")
+                number: aboutNumber.value?.querySelector(".line__inner"),
+                content: aboutContent.value?.querySelectorAll(".line__inner")
             },
             apprenticeship: {
-                number: apprenticeshipNumber.value.querySelector(".line__inner"),
-                content: apprenticeshipContent.value.querySelectorAll(".line__inner")
+                number: apprenticeshipNumber.value?.querySelector(".line__inner"),
+                content: apprenticeshipContent.value?.querySelectorAll(".line__inner")
             },
             media: {
-                number: mediaNumber.value.querySelector(".line__inner"),
-                resume: [resumeContentText.value.querySelector(".line__wrapper--top .line__inner"), resumeContentArrow.value.querySelector(".line__wrapper--top .line__inner")],
-                portfolio: [portfolioContentText.value.querySelector(".line__wrapper--top .line__inner"), portfolioContentArrow.value.querySelector(".line__wrapper--top .line__inner")]
+                number: mediaNumber.value?.querySelector(".line__inner"),
+                resume: [resumeContentText.value?.querySelector(".line__wrapper--top .line__inner"), resumeContentArrow.value?.querySelector(".line__wrapper--top .line__inner")],
+                portfolio: [portfolioContentText.value?.querySelector(".line__wrapper--top .line__inner"), portfolioContentArrow.value?.querySelector(".line__wrapper--top .line__inner")]
             },
             title: {
-                interactive: [titleInteractiveText.value.querySelector(".line__inner"), titleInteractiveSymbol.value.querySelectorAll(".line__inner")],
-                developer: titleDeveloper.value.querySelector(".line__inner")
+                interactive: [titleInteractiveText.value?.querySelector(".line__inner"), titleInteractiveSymbol.value?.querySelectorAll(".line__inner")],
+                developer: titleDeveloper.value?.querySelector(".line__inner")
             }
         }
 
+        console.dir(splitElements.alias.left.offsetWidth)
+
         //ANIMATION
+        gsap.set(splitElements.alias.right, {
+            x: -splitElements.alias.content.offsetWidth,
+        })
+
+
 
         let revealTimeline = gsap.timeline({})
+
+
+
+        revealTimeline.from([splitElements.alias.left, splitElements.alias.right], {
+            duration: 1.2,
+            yPercent: 120,
+            ease: "power4.out",
+        }, 0)
+
+        revealTimeline.to(splitElements.alias.right, {
+            duration: 1.6,
+            x: 0,
+            ease: "power4.inOut",
+        }, 0.4)
+
+        revealTimeline.from(splitElements.alias.content, {
+            duration: 1.6,
+            xPercent: -120,
+            ease: "power4.inOut",
+        }, 0.4)
+
 
         revealTimeline.from([splitElements.about.number, splitElements.about.content, splitElements.apprenticeship.number, splitElements.apprenticeship.content, splitElements.media.number, splitElements.media.resume, splitElements.media.portfolio], {
             duration: 1.2,
@@ -167,7 +220,7 @@ onMounted(() => {
             stagger: {
                 amount: 0.4
             }
-        }, 0)
+        }, 1)
 
 
         main.value.onclick = function () {
@@ -266,6 +319,7 @@ onMounted(() => {
   pointer-events: none;
 
   &__alias {
+      position: relative;
     grid-area: 2/1/3/3;
 
     @media screen and (max-width: 900px) {
