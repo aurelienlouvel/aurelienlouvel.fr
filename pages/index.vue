@@ -103,223 +103,241 @@ let context
 
 onMounted(() => {
 
-        //SPLIT ELEMENTS
+    //SPLIT ELEMENTS
 
-        splitAlias(alias.value as HTMLElement)
+    splitAlias(alias.value as HTMLElement)
 
-        const mainElements = [alias.value, aboutTitle.value, apprenticeshipTitle.value, mediaTitle.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText, titleInteractiveSymbol, titleDeveloper.value]
+    const mainElements = [alias.value, aboutTitle.value, apprenticeshipTitle.value, mediaTitle.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText.value, titleInteractiveSymbol.value, titleDeveloper.value]
 
-        mainElements.forEach((element) => {
-            if (element) {
-                splitIntoLines(element as HTMLElement)
-            }
-        })
-
-        const mainLinks = [resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value]
-
-        mainLinks.forEach((element) => {
-            if (element) {
-                splitLink(element)
-            }
-        })
-        
-        const footerElements = [footerContactTitle.value, footerContactLinks.value?.querySelectorAll(".link"), footerSocialsTitle.value, footerSocialsLinks.value?.querySelectorAll(".link")]
-
-        footerElements.forEach((element) => {
-            if (element) {
-                splitIntoLines(element as HTMLElement)
-            }
-        })
-
-        const footerLinks = [...footerContactLinks.value?.querySelectorAll(".link"), ...footerSocialsLinks.value?.querySelectorAll(".link")]
-
-        footerLinks.forEach((element) => {
-            if (element) {
-                splitLink(element)
-            }
-        })
-
-
-        let splitElements = {
-            alias: {
-                left: alias.value?.querySelector(".alias__left"),
-                content: alias.value?.querySelector(".alias__content"),
-                right: alias.value?.querySelector(".alias__right")
-            },
-            about: {
-                title: aboutTitle.value?.querySelector(".line__inner"),
-                content: aboutContent.value?.querySelectorAll(".line__inner")
-            },
-            apprenticeship: {
-                title: apprenticeshipTitle.value?.querySelector(".line__inner"),
-                content: apprenticeshipContent.value?.querySelectorAll(".line__inner")
-            },
-            media: {
-                title: mediaTitle.value?.querySelector(".line__inner"),
-                resume: [resumeContentText.value?.querySelector(".line__wrapper--top .line__inner"), resumeContentArrow.value?.querySelector(".line__wrapper--top .line__inner")],
-                portfolio: [portfolioContentText.value?.querySelector(".line__wrapper--top .line__inner"), portfolioContentArrow.value?.querySelector(".line__wrapper--top .line__inner")]
-            },
-            title: {
-                interactive: [titleInteractiveText.value?.querySelector(".line__inner"), titleInteractiveSymbol.value?.querySelectorAll(".line__inner")],
-                developer: titleDeveloper.value?.querySelector(".line__inner")
-            },
-            contact: {
-                title: footerContactTitle.value?.querySelector(".line__inner"),
-                links: footerContactLinks.value?.querySelectorAll(".line__wrapper--top .line__inner")
-            },
-            socials: {
-                title: footerSocialsTitle.value?.querySelector(".line__inner"),
-                links: footerSocialsLinks.value?.querySelectorAll(".line__wrapper--top .line__inner")
-            }
+    mainElements.forEach((element) => {
+        if (element) {
+            splitIntoLines(element as HTMLElement)
         }
+    })
 
-        //ANIMATION
-        gsap.set(splitElements.alias.right, {
-            x: -splitElements.alias.content.offsetWidth,
-        })
+    const mainLinks = [resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value]
 
-        let revealTimeline = gsap.timeline({})
-
-        revealTimeline.from([splitElements.alias.left, splitElements.alias.right], {
-            duration: 1.2,
-            yPercent: 120,
-            ease: "power4.out",
-        }, 0)
-
-        revealTimeline.to(splitElements.alias.right, {
-            duration: 1.6,
-            x: 0,
-            ease: "power4.inOut",
-        }, 0.4)
-
-        revealTimeline.from(splitElements.alias.content, {
-            duration: 1.6,
-            xPercent: -120,
-            ease: "power4.inOut",
-        }, 0.4)
-
-        revealTimeline.from([splitElements.about.title, splitElements.about.content, splitElements.apprenticeship.title, splitElements.apprenticeship.content, splitElements.media.title, splitElements.media.resume, splitElements.media.portfolio, splitElements.contact.title, splitElements.contact.links, splitElements.socials.title, splitElements.socials.links ], {
-            duration: 1.2,
-            yPercent: 200,
-            ease: "power4.out",
-            skewY: 2,
-            stagger: {
-                amount: 0.4
-            }
-        }, 1)
-
-        main.value.onclick = function () {
-            revealTimeline.restart()
+    mainLinks.forEach((element) => {
+        if (element) {
+            splitLink(element)
         }
+    })
+
+    const footerElements = [footerContactTitle.value, footerContactLinks.value?.querySelectorAll(".link"), footerSocialsTitle.value, footerSocialsLinks.value?.querySelectorAll(".link")]
+
+    footerElements.forEach((element) => {
+        if (element) {
+            splitIntoLines(element as HTMLElement)
+        }
+    })
+
+    const footerLinks = [...footerContactLinks.value?.querySelectorAll(".link"), ...footerSocialsLinks.value?.querySelectorAll(".link")]
+
+    footerLinks.forEach((element) => {
+        if (element) {
+            splitLink(element)
+        }
+    })
 
 
-        //MEDIA LINKS
+    let splitElements = {
+        alias: {
+            left: alias.value?.querySelector(".alias__left"),
+            content: alias.value?.querySelector(".alias__content"),
+            right: alias.value?.querySelector(".alias__right")
+        },
+        about: {
+            title: aboutTitle.value?.querySelector(".line__inner"),
+            content: aboutContent.value?.querySelectorAll(".line__inner")
+        },
+        apprenticeship: {
+            title: apprenticeshipTitle.value?.querySelector(".line__inner"),
+            content: apprenticeshipContent.value?.querySelectorAll(".line__inner")
+        },
+        media: {
+            title: mediaTitle.value?.querySelector(".line__inner"),
+            resume: [resumeContentText.value?.querySelector(".line__wrapper--top .line__inner"), resumeContentArrow.value?.querySelector(".line__wrapper--top .line__inner")],
+            portfolio: [portfolioContentText.value?.querySelector(".line__wrapper--top .line__inner"), portfolioContentArrow.value?.querySelector(".line__wrapper--top .line__inner")]
+        },
+        title: {
+            interactiveText: titleInteractiveText.value?.querySelector(".line__inner"),
+            interactiveSymbol : titleInteractiveSymbol.value?.querySelectorAll(".line__inner"),
+            developer: titleDeveloper.value?.querySelector(".line__inner")
+        },
+        contact: {
+            title: footerContactTitle.value?.querySelector(".line__inner"),
+            links: footerContactLinks.value?.querySelectorAll(".line__wrapper--top .line__inner")
+        },
+        socials: {
+            title: footerSocialsTitle.value?.querySelector(".line__inner"),
+            links: footerSocialsLinks.value?.querySelectorAll(".line__wrapper--top .line__inner")
+        }
+    }
 
-        const mediaLinks = [resumeContentLink.value, portfolioContentLink.value]
+    //ANIMATION
+    gsap.set(splitElements.alias.right, {
+        x: -splitElements.alias.content.offsetWidth
+    })
 
-        mediaLinks.forEach((link) => {
-            if (link) {
+    let revealTimeline = gsap.timeline({})
 
-                const elements = {
-                    top: {
-                        text: link.querySelector(".link__text .line__wrapper--top .line__inner"),
-                        arrow: link.querySelector(".link__arrow .line__wrapper--top .line__inner")
-                    },
-                    bottom: {
-                        text: link.querySelector(".link__text .line__wrapper--bottom .line__inner"),
-                        arrow: link.querySelector(".link__arrow .line__wrapper--bottom .line__inner")
-                    }
+    revealTimeline.from([splitElements.title.interactiveText, splitElements.title.interactiveSymbol], {
+        yPercent: 140,
+        skewX: 8,
+        duration: 3.6,
+        ease: "power4.inOut",
+        stagger: {
+            amount: 0.32
+        }
+    }, 0)
+
+    revealTimeline.from(splitElements.title.developer, {
+        yPercent: 140,
+        skewX: 8,
+        duration: 3.2,
+        ease: "power4.inOut"
+    }, 0.32)
+
+    revealTimeline.from([splitElements.alias.left, splitElements.alias.right], {
+        duration: 1.2,
+        yPercent: 140,
+        ease: "power4.inOut"
+    }, 1.8)
+
+    revealTimeline.to(splitElements.alias.right, {
+        duration: 1.6,
+        x: 0,
+        ease: "power4.inOut"
+    }, 2.2)
+
+    revealTimeline.from(splitElements.alias.content, {
+        duration: 1.6,
+        xPercent: -120,
+        ease: "power4.inOut"
+    }, 2.2)
+
+    revealTimeline.from([splitElements.about.title, splitElements.about.content, splitElements.apprenticeship.title, splitElements.apprenticeship.content, splitElements.media.title, splitElements.media.resume, splitElements.media.portfolio, splitElements.contact.title, splitElements.contact.links, splitElements.socials.title, splitElements.socials.links], {
+        duration: 1.2,
+        yPercent: 200,
+        ease: "power4.out",
+        skewY: 2,
+        stagger: {
+            amount: 0.32
+        }
+    }, 2.8)
+
+    main.value.onclick = function () {
+        revealTimeline.restart()
+    }
+
+
+    //MEDIA LINKS
+
+    const mediaLinks = [resumeContentLink.value, portfolioContentLink.value]
+
+    mediaLinks.forEach((link) => {
+        if (link) {
+
+            const elements = {
+                top: {
+                    text: link.querySelector(".link__text .line__wrapper--top .line__inner"),
+                    arrow: link.querySelector(".link__arrow .line__wrapper--top .line__inner")
+                },
+                bottom: {
+                    text: link.querySelector(".link__text .line__wrapper--bottom .line__inner"),
+                    arrow: link.querySelector(".link__arrow .line__wrapper--bottom .line__inner")
                 }
-
-                gsap.set([elements.bottom.text, elements.bottom.arrow], {
-                    yPercent: 200,
-                    skewY: 2
-                })
-
-                let textTimeline = gsap.timeline({
-                    paused: true,
-                    defaults: {
-                        duration: 1.2,
-                        ease: "power4.inOut"
-                    },
-                    onComplete: () => textTimeline.revert()
-                })
-
-                textTimeline.to(elements.top.text, {
-                    yPercent: -200,
-                    skewY: 2
-                }, 0).to(elements.bottom.text, {
-                    yPercent: 0,
-                    skewY: 0
-                }, 0)
-
-                let arrowTimeline = gsap.timeline({
-                    paused: true,
-                    defaults: {
-                        duration: 1.2,
-                        ease: "power4.inOut",
-                        delay: .06
-                    },
-                })
-
-                arrowTimeline.to(elements.top.arrow, {
-                    yPercent: -200
-                }, 0).to(elements.bottom.arrow, {
-                    yPercent: 0
-                }, 0)
-
-                link.addEventListener("mouseenter", () => {
-                    textTimeline.play()
-                    arrowTimeline.play()
-                })
-
-                link.addEventListener("mouseleave", () => {
-                    textTimeline.reverse()
-                    arrowTimeline.reverse()
-                })
             }
-        })
 
+            gsap.set([elements.bottom.text, elements.bottom.arrow], {
+                yPercent: 200,
+                skewY: 2
+            })
 
-        //FOOTER LINKS
+            let textTimeline = gsap.timeline({
+                paused: true,
+                defaults: {
+                    duration: 1.2,
+                    ease: "power4.inOut"
+                },
+                onComplete: () => textTimeline.revert()
+            })
 
-        footerLinks.forEach((link)=>{
-            if(link){
-                const elements = {
-                    top: link.querySelector(".line__wrapper--top .line__inner"),
-                    bottom: link.querySelector(".line__wrapper--bottom .line__inner")
+            textTimeline.to(elements.top.text, {
+                yPercent: -200,
+                skewY: 2
+            }, 0).to(elements.bottom.text, {
+                yPercent: 0,
+                skewY: 0
+            }, 0)
+
+            let arrowTimeline = gsap.timeline({
+                paused: true,
+                defaults: {
+                    duration: 1.2,
+                    ease: "power4.inOut",
+                    delay: .06
                 }
+            })
 
-                let timeline = gsap.timeline({
-                    paused: true,
-                    defaults: {
-                        duration: 1.2,
-                        ease: "power4.inOut"
-                    },
-                })
+            arrowTimeline.to(elements.top.arrow, {
+                yPercent: -200
+            }, 0).to(elements.bottom.arrow, {
+                yPercent: 0
+            }, 0)
 
-                gsap.set(elements.bottom, {
-                    yPercent: 200,
-                    skewY: 2
-                })
+            link.addEventListener("mouseenter", () => {
+                textTimeline.play()
+                arrowTimeline.play()
+            })
 
-                timeline.to(elements.top, {
-                    yPercent: -200,
-                    skewY: 2
-                }, 0).to(elements.bottom, {
-                    yPercent: 0,
-                    skewY: 0
-                }, 0)
+            link.addEventListener("mouseleave", () => {
+                textTimeline.reverse()
+                arrowTimeline.reverse()
+            })
+        }
+    })
 
-                link.addEventListener("mouseenter", () => {
-                    timeline.play()
-                })
 
-                link.addEventListener("mouseleave", () => {
-                    timeline.reverse()
-                })
+    //FOOTER LINKS
+
+    footerLinks.forEach((link) => {
+        if (link) {
+            const elements = {
+                top: link.querySelector(".line__wrapper--top .line__inner"),
+                bottom: link.querySelector(".line__wrapper--bottom .line__inner")
             }
-        })
+
+            let timeline = gsap.timeline({
+                paused: true,
+                defaults: {
+                    duration: 1.2,
+                    ease: "power4.inOut"
+                }
+            })
+
+            gsap.set(elements.bottom, {
+                yPercent: 200,
+                skewY: 2
+            })
+
+            timeline.to(elements.top, {
+                yPercent: -200,
+                skewY: 2
+            }, 0).to(elements.bottom, {
+                yPercent: 0,
+                skewY: 0
+            }, 0)
+
+            link.addEventListener("mouseenter", () => {
+                timeline.play()
+            })
+
+            link.addEventListener("mouseleave", () => {
+                timeline.reverse()
+            })
+        }
+    })
 })
 
 
@@ -328,20 +346,20 @@ onMounted(() => {
 <style lang="scss">
 
 .header {
-    z-index: 4;
-    position: absolute;
-    top: 0;
-    pointer-events: none;
+  z-index: 4;
+  position: absolute;
+  top: 0;
+  pointer-events: none;
 
-    &__logo {
-        width: fit-content;
-        height: fit-content;
-    }
+  &__logo {
+    width: fit-content;
+    height: fit-content;
+  }
 
-    &__label {
-        grid-column-start: none;
-        justify-self: end;
-    }
+  &__label {
+    grid-column-start: none;
+    justify-self: end;
+  }
 }
 
 .main {
@@ -360,7 +378,7 @@ onMounted(() => {
   pointer-events: none;
 
   &__alias {
-      position: relative;
+    position: relative;
     grid-area: 2/1/3/3;
 
     @media screen and (max-width: 900px) {
@@ -508,64 +526,63 @@ onMounted(() => {
 }
 
 
-
 .footer {
-    $self: &;
-    position: absolute;
-    bottom: 0;
-    align-items: end;
+  $self: &;
+  position: absolute;
+  bottom: 0;
+  align-items: end;
 
-    pointer-events: none;
+  pointer-events: none;
+
+  @media screen and (max-width: 1200px) {
+    grid-template-rows: repeat(2, auto);
+  }
+
+  @media screen and (max-width: 900px) {
+    height: 100dvh;
+    grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
+  }
+
+  &__title {
+    justify-self: end;
 
     @media screen and (max-width: 1200px) {
-        grid-template-rows: repeat(2, auto);
+      display: none;
     }
 
-    @media screen and (max-width: 900px) {
-        height: 100dvh;
-        grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
+    &#{$self}--contact {
+      grid-column: 8/9;
     }
 
-    &__title {
-        justify-self: end;
+    &#{$self}--socials {
+      grid-column: 11/12;
+    }
+  }
 
-        @media screen and (max-width: 1200px) {
-            display: none;
-        }
+  &__links {
+    &#{$self}--contact {
+      grid-column: 9/11;
+      @media screen and (max-width: 1200px) {
+        grid-area: 2/7/3/10;
+      }
 
-        &#{$self}--contact {
-            grid-column: 8/9;
-        }
-
-        &#{$self}--socials {
-            grid-column: 11/12;
-        }
+      @media screen and (max-width: 900px) {
+        grid-area: 5/1/6/3;
+      }
     }
 
-    &__links {
-        &#{$self}--contact {
-            grid-column: 9/11;
-            @media screen and (max-width: 1200px) {
-                grid-area: 2/7/3/10;
-            }
+    &#{$self}--socials {
+      grid-column: 12/13;
 
-            @media screen and (max-width: 900px) {
-                grid-area: 5/1/6/3;
-            }
-        }
+      @media screen and (max-width: 1200px) {
+        grid-area: 1/7/2/10;
+      }
 
-        &#{$self}--socials {
-            grid-column: 12/13;
-
-            @media screen and (max-width: 1200px) {
-                grid-area: 1/7/2/10;
-            }
-
-            @media screen and (max-width: 900px) {
-                grid-area: 5/5/6/7;
-            }
-        }
+      @media screen and (max-width: 900px) {
+        grid-area: 5/5/6/7;
+      }
     }
+  }
 }
 
 </style>
