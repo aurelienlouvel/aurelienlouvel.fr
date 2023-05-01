@@ -1,13 +1,13 @@
 <template>
     <div>
         <header class="header grid">
-            <a class="header__logo" href="https://aurelienlouvel.fr">
+            <a ref="logo" class="header__logo" href="https://aurelienlouvel.fr">
                 <svg fill="none" height="18" viewBox="0 0 14 18" width="14" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.52423 1.16855C3.89575 0.452385 4.65519 0 5.48592 0H11.8068C13.0181 0 14 0.946435 14 2.11392V15.8823C14 18.0062 11.1148 18.8037 9.9469 17.0027L6.41962 11.5632C6.01883 10.9451 5.31597 10.5696 4.55976 10.5696H2.19607C0.565654 10.5696 -0.494767 8.91586 0.234376 7.51031L3.52423 1.16855Z"
                           fill="#040810"/>
                 </svg>
             </a>
-            <h4 class="header__label">©2023</h4>
+            <h4 ref="label" class="header__label">©2023</h4>
         </header>
         <main ref="main" class="main grid">
             <h2 ref="alias" class="main__alias">(oré)</h2>
@@ -43,7 +43,7 @@
                     <span ref="titleInteractiveSymbol" class="title__symbol">✧</span>
                 </div>
                 <div class="title--developer row">
-                    <div class="title__pill">
+                    <div ref="titlePill" class="title__pill">
                     </div>
                     <h1 ref="titleDeveloper" class="title__text">Developer</h1>
                 </div>
@@ -78,6 +78,8 @@ import {splitAlias, splitIntoLines, splitLink} from "~/utils/splitElements"
 
 
 const main = ref<HTMLElement | null>(null)
+const logo = ref<HTMLElement | null>(null)
+const label = ref<HTMLElement | null>(null)
 const alias = ref<HTMLElement | null>(null)
 const aboutTitle = ref<HTMLElement | null>(null)
 const aboutContent = ref<HTMLElement | null>(null)
@@ -92,6 +94,7 @@ const portfolioContentText = ref<HTMLElement | null>(null)
 const portfolioContentArrow = ref<HTMLElement | null>(null)
 const titleInteractiveText = ref<HTMLElement | null>(null)
 const titleInteractiveSymbol = ref<HTMLElement | null>(null)
+const titlePill = ref<HTMLElement | null>(null)
 const titleDeveloper = ref<HTMLElement | null>(null)
 const footerContactTitle = ref<HTMLElement | null>(null)
 const footerContactLinks = ref<HTMLElement | null>(null)
@@ -107,7 +110,7 @@ onMounted(() => {
 
     splitAlias(alias.value as HTMLElement)
 
-    const mainElements = [alias.value, aboutTitle.value, apprenticeshipTitle.value, mediaTitle.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText.value, titleInteractiveSymbol.value, titleDeveloper.value]
+    const mainElements = [label.value, alias.value, aboutTitle.value, apprenticeshipTitle.value, mediaTitle.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText.value, titleInteractiveSymbol.value, titleDeveloper.value]
 
     mainElements.forEach((element) => {
         if (element) {
@@ -141,6 +144,8 @@ onMounted(() => {
 
 
     let splitElements = {
+        logo: logo.value,
+        label: label.value?.querySelector(".line__inner"),
         alias: {
             left: alias.value?.querySelector(".alias__left"),
             content: alias.value?.querySelector(".alias__content"),
@@ -162,6 +167,7 @@ onMounted(() => {
         title: {
             interactiveText: titleInteractiveText.value?.querySelector(".line__inner"),
             interactiveSymbol : titleInteractiveSymbol.value?.querySelectorAll(".line__inner"),
+            pill: titlePill.value,
             developer: titleDeveloper.value?.querySelector(".line__inner")
         },
         contact: {
@@ -180,6 +186,13 @@ onMounted(() => {
     })
 
     let revealTimeline = gsap.timeline({})
+
+    revealTimeline.from(splitElements.title.pill, {
+        transformOrigin: "center left",
+        scaleX: 0,
+        duration: 1.6,
+        ease: "power4.inOut"
+    }, 0)
 
     revealTimeline.from([splitElements.title.interactiveText, splitElements.title.interactiveSymbol], {
         yPercent: 140,
@@ -216,8 +229,22 @@ onMounted(() => {
         ease: "power4.inOut"
     }, 2.2)
 
+    revealTimeline.from(splitElements.logo, {
+        transformOrigin: "center left",
+        scaleX: 0,
+        duration: 1.6,
+        ease: "power4.inOut"
+    }, 2.2)
+
+    revealTimeline.from(splitElements.label, {
+        xPercent: -120,
+        skewX: 20,
+        duration: 2.4,
+        ease: "power4.inOut"
+    }, 1.8)
+
     revealTimeline.from([splitElements.about.title, splitElements.about.content, splitElements.apprenticeship.title, splitElements.apprenticeship.content, splitElements.media.title, splitElements.media.resume, splitElements.media.portfolio, splitElements.contact.title, splitElements.contact.links, splitElements.socials.title, splitElements.socials.links], {
-        duration: 1.2,
+        duration: 1.6,
         yPercent: 200,
         ease: "power4.out",
         skewY: 2,
@@ -225,10 +252,6 @@ onMounted(() => {
             amount: 0.32
         }
     }, 2.8)
-
-    main.value.onclick = function () {
-        revealTimeline.restart()
-    }
 
 
     //MEDIA LINKS
