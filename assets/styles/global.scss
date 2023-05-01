@@ -79,6 +79,9 @@ h1, h2, h3, h4, h5, h6, p, a, span {
   width: fit-content;
   height: fit-content;
   pointer-events: auto;
+  font-kerning: none;
+
+  overflow: hidden;
 
   //leading-trim: both;
   //text-edge: cap;
@@ -88,8 +91,6 @@ h1, h2, h3, h4, h5, h6, p, a, span {
 h1 {
   font-size: min(8vw, 8vh);
   font-weight: var(--font-weight-regular);
-  line-height: 66%;
-  padding-top: 2.33%;
 
   @media screen and (max-width: 900px) {
     font-size: min(14vw, 10vh);
@@ -186,5 +187,20 @@ a {
   font-size: var(--font-size-tiny);
   display: flex;
   gap: 4px;
+  will-change: transform;
+
+  &__arrow {
+    font-size: 8px;
+  }
+
+  .line__wrapper--bottom {
+    top: 0;
+    position: absolute
+  }
 }
 
+.line {
+  &__wrapper {
+    overflow: hidden;
+  }
+}
