@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header class="header grid">
+        <header ref="header" class="header grid">
             <a ref="logo" class="header__logo" href="https://aurelienlouvel.fr">
                 <svg fill="none" height="18" viewBox="0 0 14 18" width="14" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.52423 1.16855C3.89575 0.452385 4.65519 0 5.48592 0H11.8068C13.0181 0 14 0.946435 14 2.11392V15.8823C14 18.0062 11.1148 18.8037 9.9469 17.0027L6.41962 11.5632C6.01883 10.9451 5.31597 10.5696 4.55976 10.5696H2.19607C0.565654 10.5696 -0.494767 8.91586 0.234376 7.51031L3.52423 1.16855Z"
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </main>
-        <footer class="footer grid">
+        <footer ref="footer" class="footer grid">
             <h5 ref="footerContactTitle" class="footer__title footer--contact">Contact</h5>
             <div ref="footerContactLinks" class="footer__links footer--contact col">
                 <a class="link" href="mailto:louvel.aurelien.pro@gmail.com"
@@ -75,10 +75,10 @@ import gsap from "gsap"
 
 import {onMounted, ref} from "vue"
 import {splitAlias, splitIntoLines, splitClone} from "~/utils/splitElements"
-import SplitType from "split-type"
 
-
+const header = ref<HTMLElement | null>(null)
 const main = ref<HTMLElement | null>(null)
+const footer = ref<HTMLElement | null>(null)
 
 const pill = ref<HTMLElement | null>(null)
 const counter = ref<HTMLElement | null>(null)
@@ -187,7 +187,8 @@ onMounted(() => {
 
     //ANIMATION
 
-    let pillTimeline: gsap.core.Timeline, counterAppearTimeline: gsap.core.Timeline, counterUpdateTimeline: gsap.core.Timeline,
+    let pillTimeline: gsap.core.Timeline, counterAppearTimeline: gsap.core.Timeline,
+        counterUpdateTimeline: gsap.core.Timeline,
         counterDisappearTimeline: gsap.core.Timeline, revealTimeline: gsap.core.Timeline
 
 
@@ -196,7 +197,7 @@ onMounted(() => {
     })
 
     counterDisappearTimeline = gsap.timeline({
-        paused: true,
+        paused: true
     })
 
     counterUpdateTimeline = gsap.timeline({
@@ -220,20 +221,21 @@ onMounted(() => {
         }
     })
 
+    pillTimeline.to([header.value, main.value, footer.value], {
+        opacity: 1
+    }, 0)
+
     counterAppearTimeline.from(splitElements.counter, {
         yPercent: 120,
         skewX: -8,
         duration: 1.2,
-        ease: "power4.inOut"
+        ease: "power4.inOut",
     }, 0)
 
-
-    console.dir(pill.value)
-
-    counterDisappearTimeline.to(counter.value,{
-        x: pill.value.offsetWidth - counter.value.offsetWidth-4,
+    counterDisappearTimeline.to(counter.value, {
+        x: pill.value.offsetWidth - counter.value.offsetWidth - 6,
         duration: 1.2,
-        ease: "power2.inOut"
+        ease: "power3.inOut"
     }).to(splitElements.counter, {
         yPercent: -120,
         skewX: -8,
@@ -257,9 +259,13 @@ onMounted(() => {
         }
     }, 0)
 
-    function updateCounter(){
-        splitElements.counter.innerHTML = String(progress.value.toFixed(0)).padStart(3, '0')
+    function updateCounter() {
+        splitElements.counter.innerHTML = String(progress.value.toFixed(0)).padStart(3, "0")
     }
+
+    // revealTimeline.to([header.value, footer.value], {
+    //     opacity: 1,
+    // }, 0)
 
     revealTimeline.from([splitElements.title.interactiveText, splitElements.title.interactiveSymbol], {
         yPercent: 140,
@@ -268,20 +274,20 @@ onMounted(() => {
         ease: "power4.inOut",
         stagger: {
             amount: 0.32
-        }
+        },
     }, 0)
 
     revealTimeline.from(splitElements.title.developer, {
         yPercent: 140,
         skewX: 8,
         duration: 3.2,
-        ease: "power4.inOut"
+        ease: "power4.inOut",
     }, 0.32)
 
     revealTimeline.from([splitElements.alias.left, splitElements.alias.right], {
         duration: 1.2,
         yPercent: 140,
-        ease: "power4.inOut"
+        ease: "power4.inOut",
     }, 1.8)
 
     revealTimeline.to(splitElements.alias.right, {
@@ -293,21 +299,21 @@ onMounted(() => {
     revealTimeline.from(splitElements.alias.content, {
         duration: 1.6,
         xPercent: -120,
-        ease: "power4.inOut"
+        ease: "power4.inOut",
     }, 2.2)
 
     revealTimeline.from(splitElements.logo, {
         transformOrigin: "center left",
         scaleX: 0,
         duration: 1.6,
-        ease: "power4.inOut"
+        ease: "power4.inOut",
     }, 2.2)
 
     revealTimeline.from(splitElements.label, {
         xPercent: -120,
         skewX: 20,
         duration: 2.4,
-        ease: "power4.inOut"
+        ease: "power4.inOut",
     }, 1.8)
 
     revealTimeline.from([splitElements.about.title, splitElements.about.content, splitElements.apprenticeship.title, splitElements.apprenticeship.content, splitElements.media.title, splitElements.media.resume, splitElements.media.portfolio, splitElements.contact.title, splitElements.contact.links, splitElements.socials.title, splitElements.socials.links], {
@@ -317,7 +323,7 @@ onMounted(() => {
         skewY: 2,
         stagger: {
             amount: 0.32
-        }
+        },
     }, 2.8)
 
     main.value.addEventListener("click", () => {
@@ -444,6 +450,8 @@ onMounted(() => {
   position: absolute;
   top: 0;
   pointer-events: none;
+  opacity: 0;
+
 
   &__logo {
     width: fit-content;
@@ -464,6 +472,7 @@ onMounted(() => {
   height: 100dvh;
   width: 100%;
   grid-template-rows: 0.175fr 0.225fr auto;
+  opacity: 0;
 
   @media screen and (max-width: 900px) {
     grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
@@ -482,7 +491,7 @@ onMounted(() => {
     }
   }
 
-  &__number{
+  &__number {
     padding: 1px 0;
     justify-self: end;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
@@ -530,6 +539,7 @@ onMounted(() => {
     &#{$self}--apprenticeship {
       max-width: 26ch;
       grid-area: 2/7/3/10;
+
       @media screen and (max-width: 900px) {
         grid-area: 3/2/4/7;
       }
@@ -623,7 +633,7 @@ onMounted(() => {
         padding: 6px 16px 3px;
 
         font-size: 20px;
-          letter-spacing: -1px;
+        letter-spacing: -1px;
         font-weight: var(--font-weight-semibold);
       }
     }
@@ -636,8 +646,9 @@ onMounted(() => {
   position: absolute;
   bottom: 0;
   align-items: end;
-
   pointer-events: none;
+  opacity: 0;
+
 
   @media screen and (max-width: 1200px) {
     grid-template-rows: repeat(2, auto);
@@ -665,6 +676,7 @@ onMounted(() => {
   }
 
   &__links {
+
     &#{$self}--contact {
       grid-column: 9/11;
       @media screen and (max-width: 1200px) {
