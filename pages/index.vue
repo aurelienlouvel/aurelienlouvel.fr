@@ -27,11 +27,11 @@
 
             <h5 ref="mediaTitle" class="main__number main--media">03</h5>
             <div class="main__content main--media col">
-                <a ref="resumeContentLink" class="link media--resume" href="#">
+                <a ref="resumeContentLink" class="link media--resume" href="https://aurelienlouvel.fr/medias/CV_AURELIEN_LOUVEL_2023.pdf">
                     <h3 ref="resumeContentText" class="link__text">Resume</h3>
                     <span ref="resumeContentArrow" class="link__arrow">↗</span>
                 </a>
-                <a ref="portfolioContentLink" class="link media--portfolio" href="#">
+                <a ref="portfolioContentLink" class="link media--portfolio" href="https://aurelienlouvel.fr/medias/DOSSIER_TECHNIQUE_AURELIEN_LOUVEL_2023.pdf">
                     <h3 ref="portfolioContentText" class="link__text">Portfolio</h3>
                     <span ref="portfolioContentArrow" class="link__arrow">↗</span>
                 </a>
@@ -210,14 +210,12 @@ onMounted(() => {
 
     counterAppearTimeline = gsap.timeline({
         paused: true,
-        onComplete: () => {
-            counterUpdateTimeline.play()
-        }
     })
 
     pillTimeline = gsap.timeline({
         onComplete: () => {
             counterAppearTimeline.play()
+            counterUpdateTimeline.play()
         }
     })
 
@@ -252,8 +250,8 @@ onMounted(() => {
 
     counterUpdateTimeline.to(progress, {
         value: 100,
-        duration: 3.2,
-        ease: "power4.inOut",
+        duration: 2.6,
+        ease: "power3.inOut",
         onUpdate: () => {
             updateCounter()
         }
