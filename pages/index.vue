@@ -43,7 +43,12 @@
                     <span ref="titleInteractiveSymbol" class="title__symbol">✧</span>
                 </div>
                 <div class="title--developer row">
-                    <div ref="titlePill" class="title__pill">
+                    <div ref="pill" class="title__pill">
+                        <div class="title__counter">
+                            <div ref="counterHundreds" class="hundreds">0</div>
+                            <div ref="counterTens" class="tens">0</div>
+                            <div ref="counterOnes" class="ones">0</div>
+                        </div>
                     </div>
                     <h1 ref="titleDeveloper" class="title__text">Developer</h1>
                 </div>
@@ -74,10 +79,16 @@ import gsap from "gsap"
 
 import {onMounted, ref} from "vue"
 import SplitType from "split-type"
-import {splitAlias, splitIntoLines, splitLink} from "~/utils/splitElements"
+import {splitAlias, splitIntoLines, splitClone} from "~/utils/splitElements"
 
 
 const main = ref<HTMLElement | null>(null)
+
+const pill = ref<HTMLElement | null>(null)
+const counterHundreds = ref<HTMLElement | null>(null)
+const counterTens = ref<HTMLElement | null>(null)
+const counterOnes = ref<HTMLElement | null>(null)
+
 const logo = ref<HTMLElement | null>(null)
 const label = ref<HTMLElement | null>(null)
 const alias = ref<HTMLElement | null>(null)
@@ -94,14 +105,11 @@ const portfolioContentText = ref<HTMLElement | null>(null)
 const portfolioContentArrow = ref<HTMLElement | null>(null)
 const titleInteractiveText = ref<HTMLElement | null>(null)
 const titleInteractiveSymbol = ref<HTMLElement | null>(null)
-const titlePill = ref<HTMLElement | null>(null)
 const titleDeveloper = ref<HTMLElement | null>(null)
 const footerContactTitle = ref<HTMLElement | null>(null)
 const footerContactLinks = ref<HTMLElement | null>(null)
 const footerSocialsTitle = ref<HTMLElement | null>(null)
 const footerSocialsLinks = ref<HTMLElement | null>(null)
-let revealTimeline: gsap.core.Timeline
-let context
 
 
 onMounted(() => {
@@ -110,7 +118,7 @@ onMounted(() => {
 
     splitAlias(alias.value as HTMLElement)
 
-    const mainElements = [label.value, alias.value, aboutTitle.value, apprenticeshipTitle.value, mediaTitle.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText.value, titleInteractiveSymbol.value, titleDeveloper.value]
+    const mainElements = [counterHundreds.value, counterTens.value, counterOnes.value, label.value, alias.value, aboutTitle.value, apprenticeshipTitle.value, mediaTitle.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText.value, titleInteractiveSymbol.value, titleDeveloper.value]
 
     mainElements.forEach((element) => {
         if (element) {
@@ -118,11 +126,19 @@ onMounted(() => {
         }
     })
 
+    const counterElements = [counterHundreds.value, counterTens.value, counterOnes.value]
+
+    counterElements.forEach((element) => {
+        if (element) {
+            splitClone(element as HTMLElement)
+        }
+    })
+
     const mainLinks = [resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value]
 
     mainLinks.forEach((element) => {
         if (element) {
-            splitLink(element)
+            splitClone(element)
         }
     })
 
@@ -138,10 +154,9 @@ onMounted(() => {
 
     footerLinks.forEach((element) => {
         if (element) {
-            splitLink(element)
+            splitClone(element)
         }
     })
-
 
     let splitElements = {
         logo: logo.value,
@@ -166,8 +181,7 @@ onMounted(() => {
         },
         title: {
             interactiveText: titleInteractiveText.value?.querySelector(".line__inner"),
-            interactiveSymbol : titleInteractiveSymbol.value?.querySelectorAll(".line__inner"),
-            pill: titlePill.value,
+            interactiveSymbol: titleInteractiveSymbol.value?.querySelectorAll(".line__inner"),
             developer: titleDeveloper.value?.querySelector(".line__inner")
         },
         contact: {
@@ -180,19 +194,182 @@ onMounted(() => {
         }
     }
 
-    //ANIMATION
     gsap.set(splitElements.alias.right, {
         x: -splitElements.alias.content.offsetWidth
     })
 
-    let revealTimeline = gsap.timeline({})
 
-    revealTimeline.from(splitElements.title.pill, {
-        transformOrigin: "center left",
-        scaleX: 0,
-        duration: 1.6,
+    //ANIMATION
+
+    let pillTimeline: gsap.core.Timeline, counterTimeline: gsap.core.Timeline, counterOnesTimeline: gsap.core.Timeline,
+        counterTensTimeline: gsap.core.Timeline, counterHundredsTimeline: gsap.core.Timeline,
+        revealTimeline: gsap.core.Timeline
+
+
+    revealTimeline = gsap.timeline({
+        paused: true
+    })
+
+    counterTimeline = gsap.timeline({
+        duration: 4,
+        onComplete: () => {
+            revealTimeline.play()
+        }
+    })
+
+    pillTimeline = gsap.timeline({
+        onComplete: () => {
+            counterTimeline.play()
+        }
+    })
+
+    pillTimeline.from(pill.value, {
+        width: "max(5vw, 5vh)",
+        skewX: -8,
+        xPercent: -20,
+        opacity: 0,
+        duration: 1.2,
         ease: "power4.inOut"
     }, 0)
+
+
+    //COUNTER
+
+    let progress = {
+        current: 0 as number,
+        next: 0 as number,
+    }
+
+    counterTimeline.to(progress, {
+        next: 100,
+        duration: 3.2,
+        ease: "linear",
+        onUpdate: () => {
+            updateCounter()
+        }
+    }, 0)
+
+    let counterNumberElements = {
+        hundreds: {
+            top: counterHundreds.value?.querySelector(".line__wrapper--top .line__inner") as HTMLElement,
+            bottom: counterHundreds.value?.querySelector(".line__wrapper--bottom .line__inner") as HTMLElement
+        },
+        tens: {
+            top: counterTens.value?.querySelector(".line__wrapper--top .line__inner") as HTMLElement,
+            bottom: counterTens.value?.querySelector(".line__wrapper--bottom .line__inner") as HTMLElement
+        },
+        ones: {
+            top: counterOnes.value?.querySelector(".line__wrapper--top .line__inner") as HTMLElement,
+            bottom: counterOnes.value?.querySelector(".line__wrapper--bottom .line__inner") as HTMLElement
+        }
+    }
+
+    gsap.set([counterNumberElements.hundreds.bottom, counterNumberElements.tens.bottom, counterNumberElements.ones.bottom], {
+        yPercent: 200,
+        skewY: 2
+    })
+    function updateCurrentHundreds() {
+        let hundreds = progress.current.toString().split(".")[0].padStart(3, "0").split("")[0]
+        counterNumberElements.hundreds.top.innerHTML = hundreds
+    }
+
+    counterOnesTimeline = gsap.timeline({
+        defaults: {
+            duration: 0.32,
+            ease: "power4.inOut",
+        },
+        onComplete: () => {
+            console.log("ones")
+            counterOnesTimeline.revert()
+            counterNumberElements.ones.top.innerHTML = Math.floor(+progress.current.toFixed(0) % 10).toString()
+        }
+    })
+
+    counterOnesTimeline.to(counterNumberElements.ones.top, {
+        yPercent: -200,
+        skewY: -2
+    }, 0).to(counterNumberElements.ones.bottom, {
+        yPercent: 0,
+        skewY: 0
+    }, 0)
+
+    counterTensTimeline = gsap.timeline({
+        defaults: {
+            duration: 0.24,
+            ease: "power2.inOut",
+        },
+        onComplete: () => {
+            counterTensTimeline.revert()
+        }
+    })
+
+    counterTensTimeline.to(counterNumberElements.tens.top, {
+        yPercent: -200,
+        skewY: -2
+    }, 0).to(counterNumberElements.tens.bottom, {
+        yPercent: 0,
+        skewY: 0
+    }, 0)
+
+    counterHundredsTimeline = gsap.timeline({
+        defaults: {
+            duration: 0.32,
+            ease: "power2.inOut",
+        },
+        onComplete: () => {
+            counterHundredsTimeline.revert()
+            counterNumberElements.hundreds.top.innerHTML = Math.floor(+progress.current.toFixed(0) / 100).toString()
+        }
+    })
+
+    counterHundredsTimeline.to(counterNumberElements.tens.top, {
+        yPercent: -200,
+        skewY: -2
+    }, 0).to(counterNumberElements.tens.bottom, {
+        yPercent: 0,
+        skewY: 0
+    }, 0)
+
+    function updateCounter() {
+
+        let current = +progress.current.toFixed(0)
+        let next = +progress.next.toFixed(0)
+
+        const currentOnes = Math.floor(current % 10)
+        const currentTens = Math.floor((current % 100) / 10)
+        const currentHundreds = Math.floor(current / 100)
+
+        const nextOnes = Math.floor(next % 10 / 10)
+        const nextTens = Math.floor((next % 100) / 10)
+        const nextHundreds = Math.floor(next / 100)
+
+        if (currentOnes !== nextOnes) {
+            counterNumberElements.ones.bottom.innerHTML = nextOnes.toString()
+            if(!counterOnesTimeline.isActive()){
+                counterNumberElements.ones.top.innerHTML = Math.floor(current % 10).toString()
+                counterOnesTimeline.restart(true, false)
+            }
+        }
+
+        if(currentTens !== nextTens){
+            counterNumberElements.tens.bottom.innerHTML = nextTens.toString()
+            if(!counterTensTimeline.isActive()){
+                counterNumberElements.tens.top.innerHTML = Math.floor((current % 100) / 10).toString()
+                counterTensTimeline.restart(true, false)
+            }
+        }
+
+        if(currentHundreds !== nextHundreds){
+            counterNumberElements.hundreds.bottom.innerHTML = nextHundreds.toString()
+            if(!counterHundredsTimeline.isActive()){
+                counterNumberElements.hundreds.top.innerHTML = Math.floor(current / 100).toString()
+                counterHundredsTimeline.restart()
+            }
+        }
+
+        progress.current = next
+    }
+
 
     revealTimeline.from([splitElements.title.interactiveText, splitElements.title.interactiveSymbol], {
         yPercent: 140,
@@ -252,6 +429,10 @@ onMounted(() => {
             amount: 0.32
         }
     }, 2.8)
+
+    main.value.addEventListener("click", () => {
+        pillTimeline.restart()
+    })
 
 
     //MEDIA LINKS
@@ -522,6 +703,8 @@ onMounted(() => {
         margin: 5px 0 10px;
         border: 4px solid var(--color-neutral-0);
         border-radius: max(5vw, 5vh);
+        display: flex;
+        align-items: center;
 
         @media screen and (min-width: 1600px) {
           border-width: 5px;
@@ -542,6 +725,33 @@ onMounted(() => {
           margin-top: 2px;
 
           border-width: 3px;
+        }
+      }
+
+      &__counter {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 2rem;
+        width: fit-content;
+        padding: 6px 16px 3px;
+        overflow: hidden;
+
+          .line__wrapper{
+              overflow: visible;
+          }
+
+        > div {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+
+          font-size: 20px;
+          font-weight: var(--font-weight-medium);
         }
       }
     }

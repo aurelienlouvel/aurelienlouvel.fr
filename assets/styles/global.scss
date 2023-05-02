@@ -192,15 +192,15 @@ a {
   &__arrow {
     font-size: 8px;
   }
-
-  .line__wrapper--bottom {
-    top: 0;
-    position: absolute
-  }
 }
 
 .line {
   &__wrapper {
     overflow: hidden;
+
+    &--bottom{
+        top: 0;
+        position: absolute
+    }
   }
 }

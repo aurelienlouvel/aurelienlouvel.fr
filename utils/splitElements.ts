@@ -27,7 +27,7 @@ export function splitAlias(alias: HTMLElement): void {
     }
 }
 
-export function splitLink(link: HTMLElement): void {
+export function splitClone(link: HTMLElement): void {
     const wrapper = link.querySelector(".line__wrapper")
     const wrapperClone = wrapper?.cloneNode(true) as HTMLElement
 
