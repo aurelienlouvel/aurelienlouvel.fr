@@ -27,11 +27,13 @@
 
             <h5 ref="mediaTitle" class="main__number main--media">03</h5>
             <div class="main__content main--media col">
-                <a ref="resumeContentLink" class="link media--resume" href="https://aurelienlouvel.fr/medias/CV_AURELIEN_LOUVEL_2023.pdf">
+                <a ref="resumeContentLink" class="link media--resume"
+                   href="https://aurelienlouvel.fr/medias/CV_AURELIEN_LOUVEL_2023.pdf">
                     <h3 ref="resumeContentText" class="link__text">Resume</h3>
                     <span ref="resumeContentArrow" class="link__arrow">↗</span>
                 </a>
-                <a ref="portfolioContentLink" class="link media--portfolio" href="https://aurelienlouvel.fr/medias/DOSSIER_TECHNIQUE_AURELIEN_LOUVEL_2023.pdf">
+                <a ref="portfolioContentLink" class="link media--portfolio"
+                   href="https://aurelienlouvel.fr/medias/DOSSIER_TECHNIQUE_AURELIEN_LOUVEL_2023.pdf">
                     <h3 ref="portfolioContentText" class="link__text">Portfolio</h3>
                     <span ref="portfolioContentArrow" class="link__arrow">↗</span>
                 </a>
@@ -44,6 +46,7 @@
                 </div>
                 <div class="title--developer row">
                     <div ref="pill" class="title__pill">
+                        <Ball/>
                         <h6 ref="counter" class="title__counter">000</h6>
                     </div>
                     <h1 ref="titleDeveloper" class="title__text">Developer</h1>
@@ -69,6 +72,7 @@
 </template>
 
 <script lang="ts" setup>
+import Ball from "~/components/Ball.vue"
 import Background from "~/components/Background.vue"
 
 import gsap from "gsap"
@@ -209,7 +213,7 @@ onMounted(() => {
     })
 
     counterAppearTimeline = gsap.timeline({
-        paused: true,
+        paused: true
     })
 
     pillTimeline = gsap.timeline({
@@ -227,7 +231,7 @@ onMounted(() => {
         yPercent: 120,
         skewX: -8,
         duration: 1.2,
-        ease: "power4.inOut",
+        ease: "power4.inOut"
     }, 0)
 
     counterDisappearTimeline.to(counter.value, {
@@ -261,10 +265,6 @@ onMounted(() => {
         splitElements.counter.innerHTML = String(progress.value.toFixed(0)).padStart(3, "0")
     }
 
-    // revealTimeline.to([header.value, footer.value], {
-    //     opacity: 1,
-    // }, 0)
-
     revealTimeline.from([splitElements.title.interactiveText, splitElements.title.interactiveSymbol], {
         yPercent: 140,
         skewX: 8,
@@ -272,20 +272,20 @@ onMounted(() => {
         ease: "power4.inOut",
         stagger: {
             amount: 0.32
-        },
+        }
     }, 0)
 
     revealTimeline.from(splitElements.title.developer, {
         yPercent: 140,
         skewX: 8,
         duration: 3.2,
-        ease: "power4.inOut",
+        ease: "power4.inOut"
     }, 0.32)
 
     revealTimeline.from([splitElements.alias.left, splitElements.alias.right], {
         duration: 1.2,
         yPercent: 140,
-        ease: "power4.inOut",
+        ease: "power4.inOut"
     }, 1.8)
 
     revealTimeline.to(splitElements.alias.right, {
@@ -297,21 +297,21 @@ onMounted(() => {
     revealTimeline.from(splitElements.alias.content, {
         duration: 1.6,
         xPercent: -120,
-        ease: "power4.inOut",
+        ease: "power4.inOut"
     }, 2.2)
 
     revealTimeline.from(splitElements.logo, {
         transformOrigin: "center left",
         scaleX: 0,
         duration: 1.6,
-        ease: "power4.inOut",
+        ease: "power4.inOut"
     }, 2.2)
 
     revealTimeline.from(splitElements.label, {
         xPercent: -120,
         skewX: 20,
         duration: 2.4,
-        ease: "power4.inOut",
+        ease: "power4.inOut"
     }, 1.8)
 
     revealTimeline.from([splitElements.about.title, splitElements.about.content, splitElements.apprenticeship.title, splitElements.apprenticeship.content, splitElements.media.title, splitElements.media.resume, splitElements.media.portfolio, splitElements.contact.title, splitElements.contact.links, splitElements.socials.title, splitElements.socials.links], {
@@ -321,12 +321,9 @@ onMounted(() => {
         skewY: 2,
         stagger: {
             amount: 0.32
-        },
+        }
     }, 2.8)
 
-    main.value.addEventListener("click", () => {
-        pillTimeline.restart()
-    })
 
 
     //MEDIA LINKS
@@ -596,6 +593,7 @@ onMounted(() => {
       }
 
       &__pill {
+        position: relative;
         width: 10vw;
         max-width: 164px;
         margin: 5px 0 10px;
@@ -603,6 +601,7 @@ onMounted(() => {
         border-radius: max(5vw, 5vh);
         display: flex;
         align-items: center;
+        overflow: hidden;
 
         @media screen and (min-width: 1600px) {
           border-width: 5px;
@@ -632,7 +631,7 @@ onMounted(() => {
 
         font-size: 20px;
         letter-spacing: -1px;
-        font-weight: var(--font-weight-semibold);
+        font-weight: var(--font-weight-medium);
       }
     }
   }
