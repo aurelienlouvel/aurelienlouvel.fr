@@ -12,20 +12,20 @@
         <main ref="main" class="main grid">
             <h2 ref="alias" class="main__alias">(oré)</h2>
 
-            <h5 ref="aboutTitle" class="main__Title main--about">01</h5>
+            <h5 ref="aboutTitle" class="main__number main--about">01</h5>
             <h3 ref="aboutContent" class="main__content main--about">
                 I’m a front-end web developer <i>& designer,</i>
                 studying at Gobelins Paris, France.
             </h3>
 
-            <h5 ref="apprenticeshipTitle" class="main__Title main--apprenticeship">02</h5>
+            <h5 ref="apprenticeshipTitle" class="main__number main--apprenticeship">02</h5>
             <h3 ref="apprenticeshipContent" class="main__content main--apprenticeship">
                 Currently looking for a new
                 apprenticeship starting in
                 September 2023.
             </h3>
 
-            <h5 ref="mediaTitle" class="main__Title main--media">03</h5>
+            <h5 ref="mediaTitle" class="main__number main--media">03</h5>
             <div class="main__content main--media col">
                 <a ref="resumeContentLink" class="link media--resume" href="#">
                     <h3 ref="resumeContentText" class="link__text">Resume</h3>
@@ -44,11 +44,7 @@
                 </div>
                 <div class="title--developer row">
                     <div ref="pill" class="title__pill">
-                        <div class="title__counter">
-                            <div ref="counterHundreds" class="hundreds">0</div>
-                            <div ref="counterTens" class="tens">0</div>
-                            <div ref="counterOnes" class="ones">0</div>
-                        </div>
+                        <h6 ref="counter" class="title__counter">000</h6>
                     </div>
                     <h1 ref="titleDeveloper" class="title__text">Developer</h1>
                 </div>
@@ -78,17 +74,14 @@ import Background from "~/components/Background.vue"
 import gsap from "gsap"
 
 import {onMounted, ref} from "vue"
-import SplitType from "split-type"
 import {splitAlias, splitIntoLines, splitClone} from "~/utils/splitElements"
+import SplitType from "split-type"
 
 
 const main = ref<HTMLElement | null>(null)
 
 const pill = ref<HTMLElement | null>(null)
-const counterHundreds = ref<HTMLElement | null>(null)
-const counterTens = ref<HTMLElement | null>(null)
-const counterOnes = ref<HTMLElement | null>(null)
-
+const counter = ref<HTMLElement | null>(null)
 const logo = ref<HTMLElement | null>(null)
 const label = ref<HTMLElement | null>(null)
 const alias = ref<HTMLElement | null>(null)
@@ -118,19 +111,11 @@ onMounted(() => {
 
     splitAlias(alias.value as HTMLElement)
 
-    const mainElements = [counterHundreds.value, counterTens.value, counterOnes.value, label.value, alias.value, aboutTitle.value, apprenticeshipTitle.value, mediaTitle.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText.value, titleInteractiveSymbol.value, titleDeveloper.value]
+    const mainElements = [counter.value, label.value, alias.value, aboutTitle.value, apprenticeshipTitle.value, mediaTitle.value, aboutContent.value, apprenticeshipContent.value, resumeContentText.value, resumeContentArrow.value, portfolioContentText.value, portfolioContentArrow.value, titleInteractiveText.value, titleInteractiveSymbol.value, titleDeveloper.value]
 
     mainElements.forEach((element) => {
         if (element) {
             splitIntoLines(element as HTMLElement)
-        }
-    })
-
-    const counterElements = [counterHundreds.value, counterTens.value, counterOnes.value]
-
-    counterElements.forEach((element) => {
-        if (element) {
-            splitClone(element as HTMLElement)
         }
     })
 
@@ -159,6 +144,7 @@ onMounted(() => {
     })
 
     let splitElements = {
+        counter: counter.value?.querySelector(".line__inner"),
         logo: logo.value,
         label: label.value?.querySelector(".line__inner"),
         alias: {
@@ -201,175 +187,79 @@ onMounted(() => {
 
     //ANIMATION
 
-    let pillTimeline: gsap.core.Timeline, counterTimeline: gsap.core.Timeline, counterOnesTimeline: gsap.core.Timeline,
-        counterTensTimeline: gsap.core.Timeline, counterHundredsTimeline: gsap.core.Timeline,
-        revealTimeline: gsap.core.Timeline
+    let pillTimeline: gsap.core.Timeline, counterAppearTimeline: gsap.core.Timeline, counterUpdateTimeline: gsap.core.Timeline,
+        counterDisappearTimeline: gsap.core.Timeline, revealTimeline: gsap.core.Timeline
 
 
     revealTimeline = gsap.timeline({
         paused: true
     })
 
-    counterTimeline = gsap.timeline({
-        duration: 4,
+    counterDisappearTimeline = gsap.timeline({
+        paused: true,
+    })
+
+    counterUpdateTimeline = gsap.timeline({
+        paused: true,
         onComplete: () => {
+            counterDisappearTimeline.play()
             revealTimeline.play()
+        }
+    })
+
+    counterAppearTimeline = gsap.timeline({
+        paused: true,
+        onComplete: () => {
+            counterUpdateTimeline.play()
         }
     })
 
     pillTimeline = gsap.timeline({
         onComplete: () => {
-            counterTimeline.play()
+            counterAppearTimeline.play()
         }
     })
 
-    pillTimeline.from(pill.value, {
-        width: "max(5vw, 5vh)",
+    counterAppearTimeline.from(splitElements.counter, {
+        yPercent: 120,
         skewX: -8,
-        xPercent: -20,
-        opacity: 0,
         duration: 1.2,
         ease: "power4.inOut"
     }, 0)
 
 
+    console.dir(pill.value)
+
+    counterDisappearTimeline.to(counter.value,{
+        x: pill.value.offsetWidth - counter.value.offsetWidth-4,
+        duration: 1.2,
+        ease: "power2.inOut"
+    }).to(splitElements.counter, {
+        yPercent: -120,
+        skewX: -8,
+        duration: 1.2,
+        ease: "power4.inOut"
+    })
+
+
     //COUNTER
 
     let progress = {
-        current: 0 as number,
-        next: 0 as number,
+        value: 0
     }
 
-    counterTimeline.to(progress, {
-        next: 100,
+    counterUpdateTimeline.to(progress, {
+        value: 100,
         duration: 3.2,
-        ease: "linear",
+        ease: "power4.inOut",
         onUpdate: () => {
             updateCounter()
         }
     }, 0)
 
-    let counterNumberElements = {
-        hundreds: {
-            top: counterHundreds.value?.querySelector(".line__wrapper--top .line__inner") as HTMLElement,
-            bottom: counterHundreds.value?.querySelector(".line__wrapper--bottom .line__inner") as HTMLElement
-        },
-        tens: {
-            top: counterTens.value?.querySelector(".line__wrapper--top .line__inner") as HTMLElement,
-            bottom: counterTens.value?.querySelector(".line__wrapper--bottom .line__inner") as HTMLElement
-        },
-        ones: {
-            top: counterOnes.value?.querySelector(".line__wrapper--top .line__inner") as HTMLElement,
-            bottom: counterOnes.value?.querySelector(".line__wrapper--bottom .line__inner") as HTMLElement
-        }
+    function updateCounter(){
+        splitElements.counter.innerHTML = String(progress.value.toFixed(0)).padStart(3, '0')
     }
-
-    gsap.set([counterNumberElements.hundreds.bottom, counterNumberElements.tens.bottom, counterNumberElements.ones.bottom], {
-        yPercent: 200,
-        skewY: 2
-    })
-    function updateCurrentHundreds() {
-        let hundreds = progress.current.toString().split(".")[0].padStart(3, "0").split("")[0]
-        counterNumberElements.hundreds.top.innerHTML = hundreds
-    }
-
-    counterOnesTimeline = gsap.timeline({
-        defaults: {
-            duration: 0.32,
-            ease: "power4.inOut",
-        },
-        onComplete: () => {
-            console.log("ones")
-            counterOnesTimeline.revert()
-            counterNumberElements.ones.top.innerHTML = Math.floor(+progress.current.toFixed(0) % 10).toString()
-        }
-    })
-
-    counterOnesTimeline.to(counterNumberElements.ones.top, {
-        yPercent: -200,
-        skewY: -2
-    }, 0).to(counterNumberElements.ones.bottom, {
-        yPercent: 0,
-        skewY: 0
-    }, 0)
-
-    counterTensTimeline = gsap.timeline({
-        defaults: {
-            duration: 0.24,
-            ease: "power2.inOut",
-        },
-        onComplete: () => {
-            counterTensTimeline.revert()
-        }
-    })
-
-    counterTensTimeline.to(counterNumberElements.tens.top, {
-        yPercent: -200,
-        skewY: -2
-    }, 0).to(counterNumberElements.tens.bottom, {
-        yPercent: 0,
-        skewY: 0
-    }, 0)
-
-    counterHundredsTimeline = gsap.timeline({
-        defaults: {
-            duration: 0.32,
-            ease: "power2.inOut",
-        },
-        onComplete: () => {
-            counterHundredsTimeline.revert()
-            counterNumberElements.hundreds.top.innerHTML = Math.floor(+progress.current.toFixed(0) / 100).toString()
-        }
-    })
-
-    counterHundredsTimeline.to(counterNumberElements.tens.top, {
-        yPercent: -200,
-        skewY: -2
-    }, 0).to(counterNumberElements.tens.bottom, {
-        yPercent: 0,
-        skewY: 0
-    }, 0)
-
-    function updateCounter() {
-
-        let current = +progress.current.toFixed(0)
-        let next = +progress.next.toFixed(0)
-
-        const currentOnes = Math.floor(current % 10)
-        const currentTens = Math.floor((current % 100) / 10)
-        const currentHundreds = Math.floor(current / 100)
-
-        const nextOnes = Math.floor(next % 10 / 10)
-        const nextTens = Math.floor((next % 100) / 10)
-        const nextHundreds = Math.floor(next / 100)
-
-        if (currentOnes !== nextOnes) {
-            counterNumberElements.ones.bottom.innerHTML = nextOnes.toString()
-            if(!counterOnesTimeline.isActive()){
-                counterNumberElements.ones.top.innerHTML = Math.floor(current % 10).toString()
-                counterOnesTimeline.restart(true, false)
-            }
-        }
-
-        if(currentTens !== nextTens){
-            counterNumberElements.tens.bottom.innerHTML = nextTens.toString()
-            if(!counterTensTimeline.isActive()){
-                counterNumberElements.tens.top.innerHTML = Math.floor((current % 100) / 10).toString()
-                counterTensTimeline.restart(true, false)
-            }
-        }
-
-        if(currentHundreds !== nextHundreds){
-            counterNumberElements.hundreds.bottom.innerHTML = nextHundreds.toString()
-            if(!counterHundredsTimeline.isActive()){
-                counterNumberElements.hundreds.top.innerHTML = Math.floor(current / 100).toString()
-                counterHundredsTimeline.restart()
-            }
-        }
-
-        progress.current = next
-    }
-
 
     revealTimeline.from([splitElements.title.interactiveText, splitElements.title.interactiveSymbol], {
         yPercent: 140,
@@ -592,7 +482,7 @@ onMounted(() => {
     }
   }
 
-  &__Title {
+  &__number{
     padding: 1px 0;
     justify-self: end;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
@@ -729,30 +619,12 @@ onMounted(() => {
       }
 
       &__counter {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        height: 2rem;
         width: fit-content;
         padding: 6px 16px 3px;
-        overflow: hidden;
 
-          .line__wrapper{
-              overflow: visible;
-          }
-
-        > div {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap: 8px;
-
-          font-size: 20px;
-          font-weight: var(--font-weight-medium);
-        }
+        font-size: 20px;
+          letter-spacing: -1px;
+        font-weight: var(--font-weight-semibold);
       }
     }
   }
