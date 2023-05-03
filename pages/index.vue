@@ -227,8 +227,8 @@ onMounted(() => {
 
     function createBall(width: number, height: number) {
         let body = Bodies.circle(
-            width - (borderWidth + height / 2),
-            height * 0.4,
+            borderWidth + height / 2,
+            borderWidth,
             height / 4,
             {
                 restitution: 1,
@@ -302,13 +302,13 @@ onMounted(() => {
 
     //MOUSE
     function handleMouseEnter() {
-        engine.timing.timeScale = 0.06
+        engine.timing.timeScale = 0.04
     }
 
     pill.value?.addEventListener("mouseenter", handleMouseEnter)
 
     function handleMouseLeave() {
-        engine.timing.timeScale = 0.2
+        engine.timing.timeScale = 0.1
     }
 
     pill.value?.addEventListener("mouseleave", handleMouseLeave)
@@ -434,12 +434,6 @@ onMounted(() => {
         }
     }, 0)
 
-    revealTimeline.from(ball.value, {
-        yPercent: 140,
-        duration: 3.6,
-        ease: "power4.inOut"
-    }, 0)
-
 
     revealTimeline.from(splitElements.title.developer, {
         yPercent: 140,
@@ -471,44 +465,29 @@ onMounted(() => {
         value: 0
     }
 
+    revealTimeline.from(ball.value, {
+        xPercent: -120,
+        duration: 1.6,
+        ease: "power4.inOut"
+    }, 2.2)
+
     revealTimeline.to(timeScale, {
-        value: 0.4,
-        duration: 0.4,
+        value: 0.2,
+        duration: 0.6,
         ease: "power4.in",
         onUpdate: () => {
             engine.timing.timeScale = timeScale.value
         }
-    }, 2)
+    }, 2.2)
 
     revealTimeline.to(timeScale, {
-        value: 0.2,
-        duration: 0.3,
+        value: 0.1,
+        duration: 0.6,
         ease: "power4.out",
         onUpdate: () => {
             engine.timing.timeScale = timeScale.value
         }
-    }, 2.4)
-
-    // revealTimeline.to(velocity, {
-    //     x: -4.8,
-    //     y: -1.2,
-    //     duration: 0.4,
-    //     ease: "power4.in",
-    //     onUpdate: () => {
-    //         Body.setVelocity(ballBody, velocity)
-    //     }
-    // }, 2)
-    //
-    // revealTimeline.to(velocity, {
-    //     x: 0,
-    //     y: 0,
-    //     duration: 0.4,
-    //     ease: "power4.out",
-    //     onUpdate: () => {
-    //         Body.setVelocity(ballBody, velocity)
-    //     }
-    // }, 2.4)
-
+    }, 3)
 
     revealTimeline.from(splitElements.logo, {
         transformOrigin: "center left",
@@ -520,9 +499,9 @@ onMounted(() => {
     revealTimeline.from(splitElements.label, {
         xPercent: -120,
         skewX: 20,
-        duration: 2.4,
+        duration: 2,
         ease: "power4.inOut"
-    }, 1.8)
+    }, 2.2)
 
     revealTimeline.from([splitElements.about.title, splitElements.about.content, splitElements.apprenticeship.title, splitElements.apprenticeship.content, splitElements.media.title, splitElements.media.resume, splitElements.media.portfolio, splitElements.contact.title, splitElements.contact.links, splitElements.socials.title, splitElements.socials.links], {
         duration: 1.6,
