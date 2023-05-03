@@ -318,19 +318,12 @@ onMounted(() => {
         let width = element.clientWidth
         let height = element.clientHeight
 
+        Render.setPixelRatio(render, "auto")
+
         Composite.clear(engine.world, false)
 
         ballBody = createBall(width, height)
         bordersBody = createBorders(width, height)
-
-        Body.setStatic(ballBody, false)
-        Body.applyForce(ballBody, {
-            x: ballBody.position.x,
-            y: ballBody.position.y
-        }, {
-            x: 0.028 * Math.pow(width / 100, 2.4),
-            y: -0.014 * Math.pow(width / 100, 2.4)
-        })
 
         Composite.add(engine.world, [
             ballBody,
@@ -340,8 +333,7 @@ onMounted(() => {
             bordersBody.bottom
         ])
 
-        render.canvas.width = width
-        render.canvas.height = height
+        render.startViewTransform(render)
     }
 
     window.addEventListener("resize", () => handleResize(pill.value, engine))
@@ -798,6 +790,10 @@ onMounted(() => {
 
         @media screen and (max-width: 600px) {
           height: min(10.66vw, 8vh);
+        }
+
+        @media screen and (max-width: 400px) {
+          height: min(10vw, 8vh);
           border-width: 3px;
         }
 
