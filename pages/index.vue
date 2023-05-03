@@ -1,38 +1,38 @@
 <template>
     <div>
         <header ref="header" class="header grid">
-            <a ref="logo" class="header__logo" href="https://aurelienlouvel.fr">
+            <a ref="logo" class="header__logo" href="https://aurelienlouvel.fr" data-hide>
                 <svg fill="none" height="18" viewBox="0 0 14 18" width="14" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.52423 1.16855C3.89575 0.452385 4.65519 0 5.48592 0H11.8068C13.0181 0 14 0.946435 14 2.11392V15.8823C14 18.0062 11.1148 18.8037 9.9469 17.0027L6.41962 11.5632C6.01883 10.9451 5.31597 10.5696 4.55976 10.5696H2.19607C0.565654 10.5696 -0.494767 8.91586 0.234376 7.51031L3.52423 1.16855Z"
                           fill="#040810"/>
                 </svg>
             </a>
-            <h4 ref="label" class="header__label">©2023</h4>
+            <h4 ref="label" class="header__label" data-hide>©2023</h4>
         </header>
         <main ref="main" class="main grid">
-            <h2 ref="alias" class="main__alias">(oré)</h2>
+            <h2 ref="alias" class="main__alias" data-hide>(oré)</h2>
 
-            <h5 ref="aboutTitle" class="main__number main--about">01</h5>
-            <h3 ref="aboutContent" class="main__content main--about">
+            <h5 ref="aboutTitle" class="main__number main--about" data-hide>01</h5>
+            <h3 ref="aboutContent" class="main__content main--about" data-hide>
                 I’m a front-end web developer <i>& designer,</i>
                 studying at Gobelins Paris, France.
             </h3>
 
-            <h5 ref="apprenticeshipTitle" class="main__number main--apprenticeship">02</h5>
-            <h3 ref="apprenticeshipContent" class="main__content main--apprenticeship">
+            <h5 ref="apprenticeshipTitle" class="main__number main--apprenticeship" data-hide>02</h5>
+            <h3 ref="apprenticeshipContent" class="main__content main--apprenticeship" data-hide>
                 Currently looking for a new
                 apprenticeship starting in
                 September 2023.
             </h3>
 
-            <h5 ref="mediaTitle" class="main__number main--media">03</h5>
+            <h5 ref="mediaTitle" class="main__number main--media" data-hide>03</h5>
             <div class="main__content main--media col">
-                <a ref="resumeContentLink" class="link media--resume"
+                <a ref="resumeContentLink" class="link media--resume" data-hide
                    href="https://aurelienlouvel.fr/medias/CV_AURELIEN_LOUVEL_2023.pdf" target="_blank">
                     <h3 ref="resumeContentText" class="link__text">Resume</h3>
                     <span ref="resumeContentArrow" class="link__arrow">↗</span>
                 </a>
-                <a ref="portfolioContentLink" class="link media--portfolio"
+                <a ref="portfolioContentLink" class="link media--portfolio" data-hide
                    href="https://aurelienlouvel.fr/medias/DOSSIER_TECHNIQUE_AURELIEN_LOUVEL_2023.pdf" target="_blank">
                     <h3 ref="portfolioContentText" class="link__text">Portfolio</h3>
                     <span ref="portfolioContentArrow" class="link__arrow">↗</span>
@@ -41,30 +41,30 @@
 
             <div class="main__title col">
                 <div class="title--interactive row">
-                    <h1 ref="titleInteractiveText" class="title__text">Interactive</h1>
-                    <span ref="titleInteractiveSymbol" class="title__symbol">✧</span>
+                    <h1 ref="titleInteractiveText" class="title__text" data-hide>Interactive</h1>
+                    <span ref="titleInteractiveSymbol" class="title__symbol" data-hide>✧</span>
                 </div>
                 <div class="title--developer row">
                     <div ref="pill" class="title__pill">
-                        <canvas id="ballCanvas" ref="ball"></canvas>
-                        <h6 ref="counter" class="title__counter">000</h6>
+                        <canvas id="ballCanvas" ref="ball" data-hide></canvas>
+                        <h6 ref="counter" class="title__counter" data-hide>000</h6>
                     </div>
-                    <h1 ref="titleDeveloper" class="title__text">Developer</h1>
+                    <h1 ref="titleDeveloper" class="title__text" data-hide>Developer</h1>
                 </div>
             </div>
         </main>
         <footer ref="footer" class="footer grid">
-            <h5 ref="footerContactTitle" class="footer__title footer--contact">Contact</h5>
+            <h5 ref="footerContactTitle" class="footer__title footer--contact" data-hide>Contact</h5>
             <div ref="footerContactLinks" class="footer__links footer--contact col">
-                <a class="link" href="mailto:louvel.aurelien.pro@gmail.com"
+                <a class="link" data-hide href="mailto:louvel.aurelien.pro@gmail.com"
                    target="_blank">(louvel.aurelien.pro@gmail.com)</a>
             </div>
-            <h5 ref="footerSocialsTitle" class="footer__title footer--socials">Socials</h5>
+            <h5 ref="footerSocialsTitle" class="footer__title footer--socials" data-hide>Socials</h5>
             <div ref="footerSocialsLinks" class="footer__links footer--socials col">
-                <a class="link" href="https://bento.me/aurelienlouvel" target="_blank">(Bento)</a>
-                <a class="link" href="https://twitter.com/aurelienlouvel" target="_blank">(Twitter)</a>
-                <a class="link" href="https://www.linkedin.com/in/aurelienlouvel/" target="_blank">(LinkedIn)</a>
-                <a class="link" href="https://github.com/aurelienlouvel" target="_blank">(GitHub)</a>
+                <a class="link" data-hide href="https://bento.me/aurelienlouvel" target="_blank">(Bento)</a>
+                <a class="link" data-hide href="https://twitter.com/aurelienlouvel" target="_blank">(Twitter)</a>
+                <a class="link" data-hide href="https://www.linkedin.com/in/aurelienlouvel/" target="_blank">(LinkedIn)</a>
+                <a class="link" data-hide href="https://github.com/aurelienlouvel" target="_blank">(GitHub)</a>
             </div>
         </footer>
         <Background/>
@@ -366,13 +366,14 @@ onMounted(() => {
     })
 
     pillTimeline = gsap.timeline({
+        duration: 0,
         onComplete: () => {
             counterAppearTimeline.play()
             counterUpdateTimeline.play()
         }
     })
 
-    pillTimeline.to([header.value, main.value, footer.value], {
+    pillTimeline.to(document.querySelectorAll('[data-hide]'), {
         opacity: 1
     }, 0)
 
@@ -616,8 +617,6 @@ onMounted(() => {
   position: absolute;
   top: 0;
   pointer-events: none;
-  opacity: 0;
-
 
   &__logo {
     width: fit-content;
@@ -638,7 +637,6 @@ onMounted(() => {
   height: 100dvh;
   width: 100%;
   grid-template-rows: 0.175fr 0.225fr auto;
-  opacity: 0;
 
   @media screen and (max-width: 900px) {
     grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
@@ -831,8 +829,6 @@ onMounted(() => {
   bottom: 0;
   align-items: end;
   pointer-events: none;
-  opacity: 0;
-
 
   @media screen and (max-width: 1200px) {
     grid-template-rows: repeat(2, auto);
