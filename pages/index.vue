@@ -28,12 +28,12 @@
             <h5 ref="mediaTitle" class="main__number main--media">03</h5>
             <div class="main__content main--media col">
                 <a ref="resumeContentLink" class="link media--resume"
-                   href="https://aurelienlouvel.fr/medias/CV_AURELIEN_LOUVEL_2023.pdf">
+                   href="https://aurelienlouvel.fr/medias/CV_AURELIEN_LOUVEL_2023.pdf" target="_blank">
                     <h3 ref="resumeContentText" class="link__text">Resume</h3>
                     <span ref="resumeContentArrow" class="link__arrow">↗</span>
                 </a>
                 <a ref="portfolioContentLink" class="link media--portfolio"
-                   href="https://aurelienlouvel.fr/medias/DOSSIER_TECHNIQUE_AURELIEN_LOUVEL_2023.pdf">
+                   href="https://aurelienlouvel.fr/medias/DOSSIER_TECHNIQUE_AURELIEN_LOUVEL_2023.pdf" target="_blank">
                     <h3 ref="portfolioContentText" class="link__text">Portfolio</h3>
                     <span ref="portfolioContentArrow" class="link__arrow">↗</span>
                 </a>
