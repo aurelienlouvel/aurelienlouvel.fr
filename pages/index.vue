@@ -241,7 +241,7 @@ onMounted(() => {
                 }
             })
 
-        Body.setVelocity(body, {x: -6, y: -2})
+        Body.setVelocity(body, {x: 0.044*width, y: 0.012*width})
 
         return body
     }
@@ -302,7 +302,7 @@ onMounted(() => {
 
     //MOUSE
     function handleMouseEnter() {
-        engine.timing.timeScale = 0.04
+        engine.timing.timeScale = 0.02
     }
 
     pill.value?.addEventListener("mouseenter", handleMouseEnter)
@@ -461,17 +461,17 @@ onMounted(() => {
         xPercent: -120,
         duration: 1.6,
         ease: "power4.inOut"
-    }, 2.12)
+    }, 2)
 
     revealTimeline.to(timeScale, {
         value: 0.1,
-        duration: 0.6,
-        ease: "power4.in",
+        duration: 1.6,
+        ease: "power2.inOut",
         onUpdate: () => {
             engine.timing.timeScale = timeScale.value
         }
     }, 2)
-    
+
     revealTimeline.from(splitElements.logo, {
         transformOrigin: "center left",
         scaleX: 0,
