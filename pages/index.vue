@@ -22,7 +22,7 @@
             <h3 ref="apprenticeshipContent" class="main__content main--apprenticeship" data-hide>
                 Currently looking for a new
                 apprenticeship starting in
-                September 2023.
+                August 2023.
             </h3>
 
             <h5 ref="mediaTitle" class="main__number main--media" data-hide>03</h5>
