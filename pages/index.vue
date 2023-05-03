@@ -771,7 +771,7 @@ onMounted(() => {
 
       &__pill {
         position: relative;
-        width: 14vw;
+        width: 10vw;
         max-width: 140px;
         margin: 5px 0 10px;
         border: 4px solid var(--color-neutral-0);
@@ -779,8 +779,6 @@ onMounted(() => {
         display: flex;
         align-items: center;
         overflow: hidden;
-
-
 
         @media screen and (max-width: 900px) {
           width: 24vw;
