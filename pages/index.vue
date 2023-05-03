@@ -222,7 +222,7 @@ onMounted(() => {
         }
     })
 
-    let borderWidth = Number(window.getComputedStyle(pill.value).getPropertyValue("border-width").replace("px", ""))
+    let borderWidth = Number(window.getComputedStyle(pill.value).getPropertyValue("border-width").replace("px", "")) + window.devicePixelRatio - 1
 
 
     function createBall(width: number, height: number) {
@@ -461,16 +461,16 @@ onMounted(() => {
         xPercent: -120,
         duration: 1.6,
         ease: "power4.inOut"
-    }, 2.2)
+    }, 2)
 
     revealTimeline.to(timeScale, {
-        value: 0.2,
+        value: 0.16,
         duration: 0.6,
         ease: "power4.in",
         onUpdate: () => {
             engine.timing.timeScale = timeScale.value
         }
-    }, 2.2)
+    }, 2)
 
     revealTimeline.to(timeScale, {
         value: 0.1,
@@ -479,7 +479,7 @@ onMounted(() => {
         onUpdate: () => {
             engine.timing.timeScale = timeScale.value
         }
-    }, 3)
+    }, 2.6)
 
     revealTimeline.from(splitElements.logo, {
         transformOrigin: "center left",
@@ -882,5 +882,4 @@ onMounted(() => {
     }
   }
 }
-
 </style>
