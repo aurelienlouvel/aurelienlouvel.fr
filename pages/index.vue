@@ -207,7 +207,7 @@ onMounted(() => {
     Common.setDecomp(decomp)
 
     let engine = Engine.create()
-    engine.timing.timeScale = 0.1
+    engine.timing.timeScale = 0.14
     let render = Render.create({
         canvas: ball.value,
         engine: engine,
@@ -305,7 +305,7 @@ onMounted(() => {
     pill.value?.addEventListener("mouseenter", handleMouseEnter)
 
     function handleMouseLeave() {
-        engine.timing.timeScale = 0.1
+        engine.timing.timeScale = 0.14
     }
 
     pill.value?.addEventListener("mouseleave", handleMouseLeave)
@@ -325,8 +325,8 @@ onMounted(() => {
             x: ballBody.position.x,
             y: ballBody.position.y
         }, {
-            x: 0.08 * Math.pow(width / 100, 2.4),
-            y: -0.04 * Math.pow(width / 100, 2.4)
+            x: 0.028 * Math.pow(width / 100, 2.4),
+            y: -0.014 * Math.pow(width / 100, 2.4)
         })
 
         Composite.add(engine.world, [
@@ -443,8 +443,8 @@ onMounted(() => {
             x: ballBody.position.x,
             y: ballBody.position.y
         }, {
-            x: 0.08 * Math.pow(pill.value.clientWidth / 100, 2.4),
-            y: -0.04 * Math.pow(pill.value.clientWidth / 100, 2.4)
+            x: 0.028 * Math.pow(pill.value.clientWidth / 100, 2.4),
+            y: -0.014 * Math.pow(pill.value.clientWidth / 100, 2.4)
         })
     }, 1.8)
 
@@ -726,7 +726,7 @@ onMounted(() => {
     align-self: end;
     width: fit-content;
     gap: 8px;
-    margin-bottom: -8px;
+    margin-bottom: -4px;
 
     @media screen and (max-width: 900px) {
       grid-area: 6/1/7/7;
@@ -767,24 +767,21 @@ onMounted(() => {
 
       &__pill {
           position: relative;
-          width: 12vw;
-          max-width: 140px;
-          margin: 0.8% 0 2.4%;
-          border: 4px solid var(--color-neutral-0);
-          border-radius: max(5vw, 5vh);
           display: flex;
           align-items: center;
           overflow: hidden;
-
+          height: min(6.5vw, 6.5vh);
+          aspect-ratio: 14/6;
+          margin: 0.8%;
+          border: 4px solid var(--color-neutral-0);
+          border-radius: max(5vw, 5vh);
 
           @media screen and (max-width: 900px) {
-              width: 24vw;
-              max-width: 164px;
+              height: min(12vw, 8vh);
           }
 
-          @media screen and (max-width: 400px) {
-              width: 20vw;
-              margin-top: 2px;
+          @media screen and (max-width: 600px) {
+              height: min(11vw, 8vh);
               border-width: 3px;
           }
 
