@@ -207,7 +207,9 @@ onMounted(() => {
     Common.setDecomp(decomp)
 
     let engine = Engine.create()
-    engine.timing.timeScale = 0.14
+    engine.timing.timeScale = 0
+
+
     let render = Render.create({
         canvas: ball.value,
         engine: engine,
@@ -225,8 +227,8 @@ onMounted(() => {
 
     function createBall(width: number, height: number) {
         let body = Bodies.circle(
-            borderWidth + height / 2,
-            height - (borderWidth + 6),
+            width - (borderWidth + height / 2),
+            height * 0.4,
             height / 4,
             {
                 restitution: 1,
@@ -239,7 +241,8 @@ onMounted(() => {
                 }
             })
 
-        Body.setStatic(body, true)
+        Body.setVelocity(body, {x: -6, y: -2})
+
         return body
     }
 
@@ -299,13 +302,13 @@ onMounted(() => {
 
     //MOUSE
     function handleMouseEnter() {
-        engine.timing.timeScale = 0.02
+        engine.timing.timeScale = 0.06
     }
 
     pill.value?.addEventListener("mouseenter", handleMouseEnter)
 
     function handleMouseLeave() {
-        engine.timing.timeScale = 0.14
+        engine.timing.timeScale = 0.2
     }
 
     pill.value?.addEventListener("mouseleave", handleMouseLeave)
@@ -437,16 +440,6 @@ onMounted(() => {
         ease: "power4.inOut"
     }, 0)
 
-    revealTimeline.add(() => {
-        Body.setStatic(ballBody, false)
-        Body.applyForce(ballBody, {
-            x: ballBody.position.x,
-            y: ballBody.position.y
-        }, {
-            x: 0.028 * Math.pow(pill.value.clientWidth / 100, 2.4),
-            y: -0.014 * Math.pow(pill.value.clientWidth / 100, 2.4)
-        })
-    }, 1.8)
 
     revealTimeline.from(splitElements.title.developer, {
         yPercent: 140,
@@ -456,10 +449,11 @@ onMounted(() => {
     }, 0.32)
 
     revealTimeline.from([splitElements.alias.left, splitElements.alias.right], {
-        duration: 1.2,
+        skewX: 8,
         yPercent: 140,
+        duration: 3.2,
         ease: "power4.inOut"
-    }, 1.8)
+    }, 0.32)
 
     revealTimeline.to(splitElements.alias.right, {
         duration: 1.6,
@@ -472,6 +466,49 @@ onMounted(() => {
         xPercent: -120,
         ease: "power4.inOut"
     }, 2.2)
+
+    let timeScale = {
+        value: 0
+    }
+
+    revealTimeline.to(timeScale, {
+        value: 0.4,
+        duration: 0.4,
+        ease: "power4.in",
+        onUpdate: () => {
+            engine.timing.timeScale = timeScale.value
+        }
+    }, 2)
+
+    revealTimeline.to(timeScale, {
+        value: 0.2,
+        duration: 0.3,
+        ease: "power4.out",
+        onUpdate: () => {
+            engine.timing.timeScale = timeScale.value
+        }
+    }, 2.4)
+
+    // revealTimeline.to(velocity, {
+    //     x: -4.8,
+    //     y: -1.2,
+    //     duration: 0.4,
+    //     ease: "power4.in",
+    //     onUpdate: () => {
+    //         Body.setVelocity(ballBody, velocity)
+    //     }
+    // }, 2)
+    //
+    // revealTimeline.to(velocity, {
+    //     x: 0,
+    //     y: 0,
+    //     duration: 0.4,
+    //     ease: "power4.out",
+    //     onUpdate: () => {
+    //         Body.setVelocity(ballBody, velocity)
+    //     }
+    // }, 2.4)
+
 
     revealTimeline.from(splitElements.logo, {
         transformOrigin: "center left",
@@ -766,28 +803,28 @@ onMounted(() => {
       }
 
       &__pill {
-          position: relative;
-          display: flex;
-          align-items: center;
-          overflow: hidden;
-          height: min(6.5vw, 6.5vh);
-          aspect-ratio: 14/6;
-          margin: 0.8%;
-          border: 4px solid var(--color-neutral-0);
-          border-radius: max(5vw, 5vh);
+        position: relative;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        height: min(6.5vw, 6.5vh);
+        aspect-ratio: 14/6;
+        margin: 0.8%;
+        border: 4px solid var(--color-neutral-0);
+        border-radius: max(5vw, 5vh);
 
-          @media screen and (max-width: 900px) {
-              height: min(12vw, 8vh);
-          }
+        @media screen and (max-width: 900px) {
+          height: min(12vw, 8vh);
+        }
 
-          @media screen and (max-width: 600px) {
-              height: min(11vw, 8vh);
-              border-width: 3px;
-          }
+        @media screen and (max-width: 600px) {
+          height: min(10.66vw, 8vh);
+          border-width: 3px;
+        }
 
-          @media screen and (max-width: 320px) {
-              border-width: 2px;
-          }
+        @media screen and (max-width: 320px) {
+          border-width: 2px;
+        }
 
 
         #ballCanvas {
