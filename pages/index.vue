@@ -461,26 +461,17 @@ onMounted(() => {
         xPercent: -120,
         duration: 1.6,
         ease: "power4.inOut"
-    }, 2)
+    }, 2.12)
 
     revealTimeline.to(timeScale, {
-        value: 0.16,
+        value: 0.1,
         duration: 0.6,
         ease: "power4.in",
         onUpdate: () => {
             engine.timing.timeScale = timeScale.value
         }
     }, 2)
-
-    revealTimeline.to(timeScale, {
-        value: 0.1,
-        duration: 0.6,
-        ease: "power4.out",
-        onUpdate: () => {
-            engine.timing.timeScale = timeScale.value
-        }
-    }, 2.6)
-
+    
     revealTimeline.from(splitElements.logo, {
         transformOrigin: "center left",
         scaleX: 0,
@@ -787,6 +778,18 @@ onMounted(() => {
         @media screen and (max-width: 900px) {
           height: min(12vw, 8vh);
         }
+
+
+        @media screen and (min-width: 600px) {
+          @media only screen and (min--moz-device-pixel-ratio: 1.5),
+          only screen and (-webkit-min-device-pixel-ratio: 1.5),
+          only screen and (min-device-pixel-ratio: 1.5),
+          only screen and (min-resolution: 1.5dppx),
+          only screen and (min-resolution: 240dpi) {
+            border-width: 6px;
+          }
+        }
+
 
         @media screen and (max-width: 600px) {
           height: min(10.66vw, 8vh);
