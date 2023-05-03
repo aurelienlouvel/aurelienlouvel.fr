@@ -46,7 +46,8 @@
                 </div>
                 <div class="title--developer row">
                     <div ref="pill" class="title__pill">
-                        <Ball/>
+                        <!--                        <Ball/>-->
+                        <canvas id="ballCanvas" ref="ball"></canvas>
                         <h6 ref="counter" class="title__counter">000</h6>
                     </div>
                     <h1 ref="titleDeveloper" class="title__text">Developer</h1>
@@ -72,19 +73,30 @@
 </template>
 
 <script lang="ts" setup>
-import Ball from "~/components/Ball.vue"
+// import Ball from "~/components/Ball.vue"
 import Background from "~/components/Background.vue"
 
 import gsap from "gsap"
 
 import {onMounted, ref} from "vue"
 import {splitAlias, splitIntoLines, splitClone} from "~/utils/splitElements"
+import {
+    Engine,
+    Render,
+    Runner,
+    Bodies,
+    Composite, Body, Common, Svg
+} from "matter-js"
+import "pathseg"
+import decomp from "poly-decomp"
+
 
 const header = ref<HTMLElement | null>(null)
 const main = ref<HTMLElement | null>(null)
 const footer = ref<HTMLElement | null>(null)
 
 const pill = ref<HTMLElement | null>(null)
+const ball = ref<HTMLElement | null>(null)
 const counter = ref<HTMLElement | null>(null)
 const logo = ref<HTMLElement | null>(null)
 const label = ref<HTMLElement | null>(null)
@@ -110,8 +122,6 @@ const footerSocialsLinks = ref<HTMLElement | null>(null)
 
 
 onMounted(() => {
-
-    const ball = pill.value?.querySelector("canvas#ballCanvas") as HTMLCanvasElement
 
     //SPLIT ELEMENTS
 
@@ -191,6 +201,147 @@ onMounted(() => {
     })
 
 
+    //BALL
+
+    let width = pill.value?.clientWidth as number
+    let height = pill.value?.clientHeight as number
+
+    Common.setDecomp(decomp)
+
+    let engine = Engine.create()
+    engine.timing.timeScale = 0.1
+    let render = Render.create({
+        canvas: ball.value,
+        engine: engine,
+        options: {
+            width: width,
+            height: height,
+            wireframes: false,
+            background: "transparent"
+        }
+    })
+
+    let borderWidth = Number(window.getComputedStyle(pill.value).getPropertyValue("border-width").replace("px", ""))
+
+
+    function createBall(width: number, height: number) {
+        let body = Bodies.circle(
+            borderWidth + height/2,
+            height - (borderWidth + 6),
+            height / 4,
+            {
+                restitution: 1,
+                friction: 0,
+                frictionAir: 0,
+                frictionStatic: 0,
+                inertia: Infinity,
+                render: {
+                    fillStyle: "#040810"
+                }
+            })
+
+        Body.setStatic(body, true)
+        return body
+    }
+
+    function createBorders(width: number, height: number) {
+        let borderOptions = {
+            isStatic: true,
+            restitution: 1,
+            friction: 0,
+            frictionAir: 0,
+            frictionStatic: 0,
+            inertia: Infinity,
+            render: {
+                fillStyle: "transparent"
+            }
+        }
+
+        let borderThickness = 10
+        let margin = (borderThickness - borderWidth)
+
+        let leftPath = document.createElementNS("http://www.w3.org/2000/svg", "path")
+        leftPath.setAttribute("d", `M 0 0, H${height}, A1 1, 90, 0 0, ${height} ${height} H0 V0`)
+
+        let rightPath = document.createElementNS("http://www.w3.org/2000/svg", "path")
+        rightPath.setAttribute("d", `M 0 0, H${height}, V${height} H0 A1 1, 90, 0 0, 0 0`)
+
+        let leftArcVertices = Svg.pathToVertices(leftPath, 2)
+        let rightArcVertices = Svg.pathToVertices(rightPath, 2)
+
+        let left = Bodies.fromVertices(-margin, height / 2, leftArcVertices, borderOptions)
+        let right = Bodies.fromVertices(width + margin, height / 2, rightArcVertices, borderOptions)
+        let top = Bodies.rectangle(width / 2, -margin, width, borderThickness, borderOptions)
+        let bottom = Bodies.rectangle(width / 2, height + margin, width, borderThickness, borderOptions)
+
+        return {
+            left: left,
+            right: right,
+            top: top,
+            bottom: bottom
+        }
+    }
+
+    let ballBody = createBall(width, height)
+    let bordersBody = createBorders(width, height)
+
+    Composite.add(engine.world, [
+        ballBody,
+        bordersBody.left,
+        bordersBody.right,
+        bordersBody.top,
+        bordersBody.bottom
+    ])
+
+    Render.run(render)
+
+    let runner = Runner.create()
+    Runner.run(runner, engine)
+
+    //MOUSE
+    function handleMouseEnter() {
+        engine.timing.timeScale = 0.02
+    }
+
+    pill.value?.addEventListener("mouseenter", handleMouseEnter)
+
+    function handleMouseLeave() {
+        engine.timing.timeScale = 0.1
+    }
+
+    pill.value?.addEventListener("mouseleave", handleMouseLeave)
+
+    //RESIZE
+    function handleResize(element: HTMLElement, engine: Engine) {
+        let width = element.clientWidth
+        let height = element.clientHeight
+
+        Composite.remove(engine.world, [
+            ballBody,
+            bordersBody.left,
+            bordersBody.right,
+            bordersBody.top,
+            bordersBody.bottom
+        ])
+
+        ballBody = createBall(width, height)
+        bordersBody = createBorders(width, height)
+
+        Composite.add(engine.world, [
+            ballBody,
+            bordersBody.left,
+            bordersBody.right,
+            bordersBody.top,
+            bordersBody.bottom
+        ])
+
+        render.canvas.width = width
+        render.canvas.height = height
+
+    }
+
+    window.addEventListener("resize", () => handleResize(pill.value, engine))
+
     //ANIMATION
 
     let pillTimeline: gsap.core.Timeline, counterAppearTimeline: gsap.core.Timeline,
@@ -247,7 +398,6 @@ onMounted(() => {
         ease: "power4.inOut"
     })
 
-
     //COUNTER
 
     let progress = {
@@ -267,6 +417,9 @@ onMounted(() => {
         splitElements.counter.innerHTML = String(progress.value.toFixed(0)).padStart(3, "0")
     }
 
+
+    //REVEAL
+
     revealTimeline.from([splitElements.title.interactiveText, splitElements.title.interactiveSymbol], {
         yPercent: 140,
         skewX: 8,
@@ -277,11 +430,22 @@ onMounted(() => {
         }
     }, 0)
 
-    revealTimeline.from(ball, {
-        opacity: 0,
-        duration: 0.4,
-        ease: "power2.inOut"
-    }, 1.6)
+    revealTimeline.from(ball.value, {
+        yPercent: 140,
+        duration: 3.6,
+        ease: "power4.inOut"
+    }, 0)
+
+    revealTimeline.add(() => {
+        Body.setStatic(ballBody, false)
+        Body.applyForce(ballBody, {
+            x: ballBody.position.x,
+            y: ballBody.position.y
+        }, {
+            x: 0.08,
+            y: -0.08
+        })
+    }, 1.8)
 
     revealTimeline.from(splitElements.title.developer, {
         yPercent: 140,
@@ -608,6 +772,7 @@ onMounted(() => {
         border-radius: max(5vw, 5vh);
         display: flex;
         align-items: center;
+        overflow: hidden;
 
         @media screen and (min-width: 1600px) {
           border-width: 5px;
