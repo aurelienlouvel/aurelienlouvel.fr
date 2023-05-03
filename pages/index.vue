@@ -314,13 +314,7 @@ onMounted(() => {
         let width = element.clientWidth
         let height = element.clientHeight
 
-        Composite.remove(engine.world, [
-            ballBody,
-            bordersBody.left,
-            bordersBody.right,
-            bordersBody.top,
-            bordersBody.bottom
-        ])
+        Composite.clear(engine.world, true)
 
         ballBody = createBall(width, height)
         bordersBody = createBorders(width, height)
@@ -650,6 +644,10 @@ onMounted(() => {
     grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
   }
 
+    @media screen and (max-width: 400px) {
+        padding-bottom: 16px
+    }
+
   pointer-events: none;
 
   &__alias {
@@ -771,29 +769,24 @@ onMounted(() => {
 
       &__pill {
         position: relative;
-        width: 10vw;
+        width: 12vw;
         max-width: 140px;
-        margin: 5px 0 10px;
+        margin: 4px 0 10px;
         border: 4px solid var(--color-neutral-0);
         border-radius: max(5vw, 5vh);
         display: flex;
         align-items: center;
         overflow: hidden;
 
+
+
         @media screen and (max-width: 900px) {
           width: 24vw;
           max-width: 360px;
-
-          border-width: 5px;
-        }
-
-        @media screen and (max-width: 600px) {
-          border-width: 4px;
         }
 
         @media screen and (max-width: 420px) {
           margin-top: 2px;
-
           border-width: 3px;
         }
 
