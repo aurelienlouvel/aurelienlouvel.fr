@@ -215,7 +215,8 @@ onMounted(() => {
             width: width,
             height: height,
             wireframes: false,
-            background: "transparent"
+            background: "transparent",
+            pixelRatio: "auto"
         }
     })
 
@@ -224,7 +225,7 @@ onMounted(() => {
 
     function createBall(width: number, height: number) {
         let body = Bodies.circle(
-            borderWidth + height/2,
+            borderWidth + height / 2,
             height - (borderWidth + 6),
             height / 4,
             {
@@ -314,7 +315,7 @@ onMounted(() => {
         let width = element.clientWidth
         let height = element.clientHeight
 
-        Composite.clear(engine.world, true)
+        Composite.clear(engine.world, false)
 
         ballBody = createBall(width, height)
         bordersBody = createBorders(width, height)
@@ -324,8 +325,8 @@ onMounted(() => {
             x: ballBody.position.x,
             y: ballBody.position.y
         }, {
-            x: 0.08,
-            y: -0.08
+            x: 0.08 * Math.pow(width / 100, 2.4),
+            y: -0.04 * Math.pow(width / 100, 2.4)
         })
 
         Composite.add(engine.world, [
@@ -442,8 +443,8 @@ onMounted(() => {
             x: ballBody.position.x,
             y: ballBody.position.y
         }, {
-            x: 0.08,
-            y: -0.08
+            x: 0.08 * Math.pow(pill.value.clientWidth / 100, 2.4),
+            y: -0.04 * Math.pow(pill.value.clientWidth / 100, 2.4)
         })
     }, 1.8)
 
@@ -644,10 +645,6 @@ onMounted(() => {
     grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
   }
 
-    @media screen and (max-width: 400px) {
-        padding-bottom: 16px
-    }
-
   pointer-events: none;
 
   &__alias {
@@ -729,6 +726,7 @@ onMounted(() => {
     align-self: end;
     width: fit-content;
     gap: 8px;
+    margin-bottom: -8px;
 
     @media screen and (max-width: 900px) {
       grid-area: 6/1/7/7;
@@ -768,27 +766,32 @@ onMounted(() => {
       }
 
       &__pill {
-        position: relative;
-        width: 12vw;
-        max-width: 140px;
-        margin: 4px 0 10px;
-        border: 4px solid var(--color-neutral-0);
-        border-radius: max(5vw, 5vh);
-        display: flex;
-        align-items: center;
-        overflow: hidden;
+          position: relative;
+          width: 12vw;
+          max-width: 140px;
+          margin: 0.8% 0 2.4%;
+          border: 4px solid var(--color-neutral-0);
+          border-radius: max(5vw, 5vh);
+          display: flex;
+          align-items: center;
+          overflow: hidden;
 
 
+          @media screen and (max-width: 900px) {
+              width: 24vw;
+              max-width: 164px;
+          }
 
-        @media screen and (max-width: 900px) {
-          width: 24vw;
-          max-width: 360px;
-        }
+          @media screen and (max-width: 400px) {
+              width: 20vw;
+              margin-top: 2px;
+              border-width: 3px;
+          }
 
-        @media screen and (max-width: 420px) {
-          margin-top: 2px;
-          border-width: 3px;
-        }
+          @media screen and (max-width: 320px) {
+              border-width: 2px;
+          }
+
 
         #ballCanvas {
           position: absolute;
@@ -802,10 +805,7 @@ onMounted(() => {
 
       &__counter {
         width: fit-content;
-        padding: 6px 16px 3px;
-
-        font-size: 20px;
-        letter-spacing: -1px;
+        padding: 6% 14% 3%;
         font-weight: var(--font-weight-medium);
       }
     }

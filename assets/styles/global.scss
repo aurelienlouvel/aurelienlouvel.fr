@@ -95,10 +95,6 @@ h1 {
   @media screen and (max-width: 900px) {
     font-size: min(14vw, 10vh);
   }
-
-  @media screen and (max-width: 600px) {
-    font-size: min(13.33vw, 12vh);
-  }
 }
 
 h2 {
@@ -130,6 +126,15 @@ h5 {
   font-size: var(--font-size-tiny);
   text-transform: uppercase;
   color: var(--color-neutral-20);
+}
+
+h6{
+  font-size: 20px;
+  letter-spacing: -1px;
+
+  @media screen and (max-width: 400px) {
+    font-size: 14px;
+  }
 }
 
 p {
