@@ -46,7 +46,6 @@
                 </div>
                 <div class="title--developer row">
                     <div ref="pill" class="title__pill">
-                        <!--                        <Ball/>-->
                         <canvas id="ballCanvas" ref="ball"></canvas>
                         <h6 ref="counter" class="title__counter">000</h6>
                     </div>
@@ -73,7 +72,6 @@
 </template>
 
 <script lang="ts" setup>
-// import Ball from "~/components/Ball.vue"
 import Background from "~/components/Background.vue"
 
 import gsap from "gsap"
@@ -327,6 +325,15 @@ onMounted(() => {
         ballBody = createBall(width, height)
         bordersBody = createBorders(width, height)
 
+        Body.setStatic(ballBody, false)
+        Body.applyForce(ballBody, {
+            x: ballBody.position.x,
+            y: ballBody.position.y
+        }, {
+            x: 0.08,
+            y: -0.08
+        })
+
         Composite.add(engine.world, [
             ballBody,
             bordersBody.left,
@@ -337,7 +344,6 @@ onMounted(() => {
 
         render.canvas.width = width
         render.canvas.height = height
-
     }
 
     window.addEventListener("resize", () => handleResize(pill.value, engine))
@@ -765,8 +771,8 @@ onMounted(() => {
 
       &__pill {
         position: relative;
-        width: 10vw;
-        max-width: 164px;
+        width: 14vw;
+        max-width: 140px;
         margin: 5px 0 10px;
         border: 4px solid var(--color-neutral-0);
         border-radius: max(5vw, 5vh);
@@ -774,9 +780,7 @@ onMounted(() => {
         align-items: center;
         overflow: hidden;
 
-        @media screen and (min-width: 1600px) {
-          border-width: 5px;
-        }
+
 
         @media screen and (max-width: 900px) {
           width: 24vw;
