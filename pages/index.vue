@@ -111,6 +111,8 @@ const footerSocialsLinks = ref<HTMLElement | null>(null)
 
 onMounted(() => {
 
+    const ball = pill.value?.querySelector("canvas#ballCanvas") as HTMLCanvasElement
+
     //SPLIT ELEMENTS
 
     splitAlias(alias.value as HTMLElement)
@@ -275,6 +277,12 @@ onMounted(() => {
         }
     }, 0)
 
+    revealTimeline.from(ball, {
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.inOut"
+    }, 1.6)
+
     revealTimeline.from(splitElements.title.developer, {
         yPercent: 140,
         skewX: 8,
@@ -323,7 +331,6 @@ onMounted(() => {
             amount: 0.32
         }
     }, 2.8)
-
 
 
     //MEDIA LINKS
@@ -601,7 +608,6 @@ onMounted(() => {
         border-radius: max(5vw, 5vh);
         display: flex;
         align-items: center;
-        overflow: hidden;
 
         @media screen and (min-width: 1600px) {
           border-width: 5px;
@@ -622,6 +628,15 @@ onMounted(() => {
           margin-top: 2px;
 
           border-width: 3px;
+        }
+
+        #ballCanvas {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: auto;
         }
       }
 
