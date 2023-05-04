@@ -1,7 +1,7 @@
 <template>
     <div>
         <header ref="header" class="header grid">
-            <a ref="logo" class="header__logo" href="https://aurelienlouvel.fr" data-hide>
+            <a ref="logo" class="header__logo" data-hide href="https://aurelienlouvel.fr">
                 <svg fill="none" height="18" viewBox="0 0 14 18" width="14" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.52423 1.16855C3.89575 0.452385 4.65519 0 5.48592 0H11.8068C13.0181 0 14 0.946435 14 2.11392V15.8823C14 18.0062 11.1148 18.8037 9.9469 17.0027L6.41962 11.5632C6.01883 10.9451 5.31597 10.5696 4.55976 10.5696H2.19607C0.565654 10.5696 -0.494767 8.91586 0.234376 7.51031L3.52423 1.16855Z"
                           fill="#040810"/>
@@ -63,7 +63,8 @@
             <div ref="footerSocialsLinks" class="footer__links footer--socials col">
                 <a class="link" data-hide href="https://bento.me/aurelienlouvel" target="_blank">(Bento)</a>
                 <a class="link" data-hide href="https://twitter.com/aurelienlouvel" target="_blank">(Twitter)</a>
-                <a class="link" data-hide href="https://www.linkedin.com/in/aurelienlouvel/" target="_blank">(LinkedIn)</a>
+                <a class="link" data-hide href="https://www.linkedin.com/in/aurelienlouvel/"
+                   target="_blank">(LinkedIn)</a>
                 <a class="link" data-hide href="https://github.com/aurelienlouvel" target="_blank">(GitHub)</a>
             </div>
         </footer>
@@ -241,7 +242,7 @@ onMounted(() => {
                 }
             })
 
-        Body.setVelocity(body, {x: 0.044*width, y: 0.012*width})
+        Body.setVelocity(body, {x: 0.044 * width, y: 0.012 * width})
 
         return body
     }
@@ -371,7 +372,7 @@ onMounted(() => {
         }
     })
 
-    pillTimeline.to(document.querySelectorAll('[data-hide]'), {
+    pillTimeline.to(document.querySelectorAll("[data-hide]"), {
         opacity: 1
     }, 0)
 
@@ -640,6 +641,10 @@ onMounted(() => {
     grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
   }
 
+  @media screen and (max-height: 400px) {
+    height: 140dvh;
+  }
+
   pointer-events: none;
 
   &__alias {
@@ -776,7 +781,7 @@ onMounted(() => {
         }
 
 
-        @media screen and (min-width: 600px) {
+        @media screen and (min-width: 600px) and (min-height: 600px) {
           @media only screen and (min--moz-device-pixel-ratio: 1.5),
           only screen and (-webkit-min-device-pixel-ratio: 1.5),
           only screen and (min-device-pixel-ratio: 1.5),
@@ -784,6 +789,10 @@ onMounted(() => {
           only screen and (min-resolution: 240dpi) {
             border-width: 6px;
           }
+        }
+
+          @media screen and (max-height: 600px) {
+          border-width: 3px;
         }
 
 
@@ -833,8 +842,13 @@ onMounted(() => {
   }
 
   @media screen and (max-width: 900px) {
+    top: 0;
     height: 100dvh;
     grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
+  }
+
+  @media screen and (max-height: 400px) {
+    height: 140dvh;
   }
 
   &__title {

@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts" setup>
+
 useHead({
     link:[
         { rel: 'icon', type: 'image/svg+xml', href: '/images/favicons/favicon.svg' },
