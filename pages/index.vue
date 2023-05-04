@@ -332,8 +332,6 @@ onMounted(() => {
             bordersBody.top,
             bordersBody.bottom
         ])
-
-        render.startViewTransform(render)
     }
 
     window.addEventListener("resize", () => handleResize(pill.value, engine))
