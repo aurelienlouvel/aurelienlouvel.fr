@@ -136,7 +136,7 @@ h5 {
   color: var(--color-neutral-20);
 }
 
-h6{
+h6 {
   font-size: 20px;
   letter-spacing: -1px;
 
@@ -206,7 +206,7 @@ a {
     font-size: 8px;
   }
 
-  h3 .line__inner{
+  h3 .line__inner {
     text-decoration: underline;
   }
 }
@@ -215,13 +215,18 @@ a {
   &__wrapper {
     overflow: hidden;
 
-    &--bottom{
-        top: 0;
-        position: absolute
+    &--bottom {
+      top: 0;
+      position: absolute
     }
   }
 }
 
 [data-hide] {
   opacity: 0;
+  pointer-events: none;
+
+  > * {
+    pointer-events: none;
+  }
 }

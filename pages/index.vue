@@ -345,7 +345,12 @@ onMounted(() => {
 
 
     revealTimeline = gsap.timeline({
-        paused: true
+        paused: true,
+        onComplete: () => {
+            document.querySelectorAll("[data-hide]").forEach((element) => {
+                element.attributes.removeNamedItem("data-hide")
+            })
+        }
     })
 
     counterDisappearTimeline = gsap.timeline({
