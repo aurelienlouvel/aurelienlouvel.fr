@@ -12,6 +12,11 @@ export default {
 #canvas {
     width: 100%;
     height: 100dvh;
+
+    @media screen and (max-height: 400px) {
+        height: 140dvh;
+    }
+
 }
 
 </style>
