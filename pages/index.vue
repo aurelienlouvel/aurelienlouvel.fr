@@ -402,12 +402,12 @@ onMounted(() => {
     //COUNTER
 
     let progress = {
-        value: 0
+        value: 40
     }
 
     counterUpdateTimeline.to(progress, {
         value: 100,
-        duration: 2.6,
+        duration: 1.6,
         ease: "power3.inOut",
         onUpdate: () => {
             updateCounter()
@@ -777,7 +777,7 @@ onMounted(() => {
         overflow: hidden;
         height: min(6.5vw, 6.5vh);
         aspect-ratio: 14/6;
-        margin: 0.8%;
+        margin: 1.2% 0.8%;
         border: 4px solid var(--color-neutral-0);
         border-radius: max(5vw, 5vh);
 

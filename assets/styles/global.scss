@@ -38,6 +38,7 @@
   font-family: 'Yapari';
   src: url("../fonts/yapari-expanded.woff2") format("woff2"),
   url("../fonts/yapari-expanded.woff") format("woff");
+  font-weight: 600;
   font-display: block;
   font-style: normal;
 }
@@ -95,6 +96,7 @@ h1, h2, h3, h4, h5, h6, p, a, span {
 h1 {
   font-size: min(8vw, 8vh);
   font-weight: var(--font-weight-regular);
+  line-height: 100%;
 
   @media screen and (max-width: 900px) {
     font-size: min(14vw, 10vh);
@@ -107,6 +109,7 @@ h1 {
 
 h2 {
   font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-small);
   letter-spacing: 0.06em;
 }
