@@ -636,10 +636,11 @@ onMounted(() => {
 .main {
   $self: &;
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100dvh;
-  width: 100%;
+  inset: 0;
+  height: 100svh;
+
+
+    width: 100%;
   grid-template-rows: 0.175fr 0.225fr auto;
 
   @media screen and (max-width: 900px) {
@@ -796,7 +797,7 @@ onMounted(() => {
           }
         }
 
-          @media screen and (max-height: 600px) {
+        @media screen and (max-height: 600px) {
           border-width: 3px;
         }
 
