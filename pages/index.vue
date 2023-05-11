@@ -647,7 +647,7 @@ onMounted(() => {
     grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
   }
 
-  @media screen and (max-height: 400px) {
+  @media screen and (max-height: 480px) {
     height: 140dvh;
   }
 
@@ -853,7 +853,7 @@ onMounted(() => {
     grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
   }
 
-  @media screen and (max-height: 400px) {
+  @media screen and (max-height: 480px) {
     height: 140dvh;
   }
 
