@@ -521,21 +521,21 @@ onMounted(() => {
             }
 
             gsap.set([elements.bottom.text, elements.bottom.arrow], {
-                yPercent: 200,
+                yPercent: 140,
                 skewY: 2
             })
 
             let textTimeline = gsap.timeline({
                 paused: true,
                 defaults: {
-                    duration: 1.2,
+                    duration: 1,
                     ease: "power4.inOut"
                 },
                 onComplete: () => textTimeline.revert()
             })
 
             textTimeline.to(elements.top.text, {
-                yPercent: -200,
+                yPercent: -140,
                 skewY: 2
             }, 0).to(elements.bottom.text, {
                 yPercent: 0,
@@ -545,14 +545,14 @@ onMounted(() => {
             let arrowTimeline = gsap.timeline({
                 paused: true,
                 defaults: {
-                    duration: 1.2,
+                    duration: 1,
                     ease: "power4.inOut",
-                    delay: .06
+                    delay: .02
                 }
             })
 
             arrowTimeline.to(elements.top.arrow, {
-                yPercent: -200
+                yPercent: -140
             }, 0).to(elements.bottom.arrow, {
                 yPercent: 0
             }, 0)
@@ -582,18 +582,18 @@ onMounted(() => {
             let timeline = gsap.timeline({
                 paused: true,
                 defaults: {
-                    duration: 1.2,
+                    duration: 1,
                     ease: "power4.inOut"
                 }
             })
 
             gsap.set(elements.bottom, {
-                yPercent: 200,
+                yPercent: 140,
                 skewY: 2
             })
 
             timeline.to(elements.top, {
-                yPercent: -200,
+                yPercent: -140,
                 skewY: 2
             }, 0).to(elements.bottom, {
                 yPercent: 0,
