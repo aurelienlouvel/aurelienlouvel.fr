@@ -639,9 +639,10 @@ onMounted(() => {
   inset: 0;
   height: 100svh;
 
-
-    width: 100%;
+  width: 100%;
   grid-template-rows: 0.175fr 0.225fr auto;
+
+  padding-bottom: 20px;
 
   @media screen and (max-width: 900px) {
     grid-template-rows: 0.225fr 0.075fr  0.175fr 0.225fr 0.125fr 0.5fr;
