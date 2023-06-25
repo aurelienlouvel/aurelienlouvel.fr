@@ -87,16 +87,13 @@ h1, h2, h3, h4, h5, h6, p, a, span {
   font-kerning: none;
 
   overflow: hidden;
-
-  //leading-trim: both;
-  //text-edge: cap;
 }
 
 
 h1 {
   font-size: min(8vw, 8vh);
   font-weight: var(--font-weight-regular);
-  line-height: 100%;
+  line-height: 118%;
 
   @media screen and (max-width: 900px) {
     font-size: min(14vw, 10vh);

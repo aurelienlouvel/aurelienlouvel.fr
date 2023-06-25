@@ -14,7 +14,7 @@
 
             <h5 ref="aboutTitle" class="main__number main--about" data-hide>01</h5>
             <h3 ref="aboutContent" class="main__content main--about" data-hide>
-                I’m a front-end web developer <i>& designer,</i>
+                I’m a <i>designer</i> & front-end web developer
                 studying at Gobelins Paris, France.
             </h3>
 
@@ -22,7 +22,7 @@
             <h3 ref="apprenticeshipContent" class="main__content main--apprenticeship" data-hide>
                 Currently looking for a new
                 apprenticeship starting in
-                August 2023.
+                September 2023.
             </h3>
 
             <h5 ref="mediaTitle" class="main__number main--media" data-hide>03</h5>
@@ -33,7 +33,7 @@
                     <span ref="resumeContentArrow" class="link__arrow">↗</span>
                 </a>
                 <a ref="portfolioContentLink" class="link media--portfolio" data-hide
-                   href="https://aurelienlouvel.fr/medias/DOSSIER_TECHNIQUE_AURELIEN_LOUVEL_2023.pdf" target="_blank">
+                   href="https://aurelienlouvel.fr/medias/PORTFOLIO_CREATIF_AURELIEN_LOUVEL_2023.pdf" target="_blank">
                     <h3 ref="portfolioContentText" class="link__text">Portfolio</h3>
                     <span ref="portfolioContentArrow" class="link__arrow">↗</span>
                 </a>
@@ -41,7 +41,7 @@
 
             <div class="main__title col">
                 <div class="title--interactive row">
-                    <h1 ref="titleInteractiveText" class="title__text" data-hide>Interactive</h1>
+                    <h1 ref="titleInteractiveText" class="title__text" data-hide>Product</h1>
                     <span ref="titleInteractiveSymbol" class="title__symbol" data-hide>✧</span>
                 </div>
                 <div class="title--developer row">
@@ -49,7 +49,7 @@
                         <canvas id="ballCanvas" ref="ball" data-hide></canvas>
                         <h6 ref="counter" class="title__counter" data-hide>000</h6>
                     </div>
-                    <h1 ref="titleDeveloper" class="title__text" data-hide>Developer</h1>
+                    <h1 ref="titleDeveloper" class="title__text" data-hide>Designer</h1>
                 </div>
             </div>
         </main>
@@ -728,19 +728,17 @@ onMounted(() => {
   }
 
   &__title {
+    gap:0;
     grid-area: 3/1/4/8;
     align-self: end;
     width: fit-content;
-    gap: 8px;
     margin-bottom: -4px;
 
     @media screen and (max-width: 900px) {
       grid-area: 6/1/7/7;
-      gap: 6px;
     }
 
     .title {
-
       &--interactive {
         color: var(--color-neutral-20);
       }
@@ -778,7 +776,7 @@ onMounted(() => {
         overflow: hidden;
         height: min(6.5vw, 6.5vh);
         aspect-ratio: 14/6;
-        margin: 1.4% 0.8%;
+        margin: 1.4% 0.8% 0;
         border: 4px solid var(--color-neutral-0);
         border-radius: max(5vw, 5vh);
 
