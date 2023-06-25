@@ -16,14 +16,14 @@ useHead({
 })
 useSeoMeta({
     title: "(oré) ✧ Aurélien Louvel",
-    description: "Front-end web developer & designer at Gobelins Paris, passionate about creating memorable user experiences and beautiful websites.",
+    description: "Product Designer at GOBELINS Paris, passionate about creating beautiful and memorable experiences.",
     ogType: "website",
     ogUrl: "https://aurelienlouvel.fr",
     ogTitle: "Aurélien Louvel",
-    ogDescription: "Front-end web developer & designer at Gobelins Paris, passionate about creating memorable user experiences and beautiful websites.e",
+    ogDescription: "Product Designer at GOBELINS Paris, passionate about creating beautiful and memorable experiences.",
     ogImage: "https://example.com/image.png",
     twitterTitle: "Aurélien Louvel",
-    twitterDescription: "Front-end web developer & designer at Gobelins Paris, passionate about creating memorable user experiences and beautiful websites.",
+    twitterDescription: "Product Designer at GOBELINS Paris, passionate about creating beautiful and memorable experiences.",
     twitterSite: "@aurelienlouvel",
     twitterCreator: "@aurelienlouvel",
     twitterCard: "summary_large_image",
