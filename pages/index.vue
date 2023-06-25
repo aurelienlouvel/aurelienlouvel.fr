@@ -776,7 +776,7 @@ onMounted(() => {
         overflow: hidden;
         height: min(6.5vw, 6.5vh);
         aspect-ratio: 14/6;
-        margin: 1.4% 0.8% 0;
+        margin: 2% 0.8% 0;
         border: 4px solid var(--color-neutral-0);
         border-radius: max(5vw, 5vh);
 
